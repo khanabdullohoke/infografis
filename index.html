@@ -995,19 +995,18 @@ function pendaftarGoTo(page){
   renderPendaftarPage();
 }
 
-/* ── CACHE ── */
-const CACHE_KEY='spmb_infografis_v1';
+/* ── CACHE (in-memory, iframe-safe — no localStorage) ── */
 const CACHE_TTL=10*60*1000;
-function saveCache(data){try{localStorage.setItem(CACHE_KEY,JSON.stringify({ts:Date.now(),data}));}catch(_){}}
+let _memCache=null;
+function saveCache(data){try{_memCache={ts:Date.now(),data};}catch(_){}}
 function loadCache(){
   try{
-    const raw=localStorage.getItem(CACHE_KEY);if(!raw)return null;
-    const obj=JSON.parse(raw);
-    if(Date.now()-obj.ts>CACHE_TTL)return null;
-    return obj.data;
+    if(!_memCache)return null;
+    if(Date.now()-_memCache.ts>CACHE_TTL)return null;
+    return _memCache.data;
   }catch(_){return null;}
 }
-function clearCache(){try{localStorage.removeItem(CACHE_KEY);}catch(_){}}
+function clearCache(){_memCache=null;}
 
 /* ── RENDER DATA ── */
 function renderData(d,source){
