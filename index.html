@@ -1112,10 +1112,10 @@ function renderData(d,source){
       const sek=(r.namaSekolah||r.nama_sekolah||'').trim();
       if(sek){
         asalSekolahSet.add(sek.toLowerCase());
-        /* Deteksi negeri vs swasta dari nama sekolah */
-        const sekLow=sek.toLowerCase();
-        if(/\b(negeri|smpn|mtsn|sdn|n\s*\d)\b/.test(sekLow)||/ n\d/.test(sekLow)||sekLow.includes(' negeri'))negeri++;
-        else swasta++;
+        /* Baca field jenisSekolah langsung dari form (Negeri / Swasta) */
+        const jenisSekolah=(r.jenisSekolah||'').toLowerCase().trim();
+        if(jenisSekolah.indexOf('negeri')!==-1)negeri++;
+        else if(jenisSekolah.indexOf('swasta')!==-1)swasta++;
       }
       const j1=normJurusan(r.pilihan1||r.jurusan||'');
       if(j1&&j1!=='Lainnya')jurusanCount[j1]=(jurusanCount[j1]||0)+1;
