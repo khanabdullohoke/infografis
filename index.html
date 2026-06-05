@@ -1130,12 +1130,13 @@ function renderData(d,source){
     laki=d.laki||d.lakiLaki||0;
     perempuan=d.perempuan||0;
     pip=d.pip||0;
-    negeri=d.negeri||0;
-    swasta=d.swasta||0;
+    negeri=d.sekolahNegeri||d.negeri||0;
+    swasta=d.sekolahSwasta||d.swasta||0;
     if(d.jurusan)Object.assign(jurusanCount,d.jurusan);
     if(d.kecamatan)Object.assign(kecCount,d.kecamatan);
     if(d.kabupaten)Object.assign(kabCount,d.kabupaten);
     if(d.asalSekolah)asalSekolahSet=new Set(Object.keys(d.asalSekolah||{}));
+    if(d.asalSekolahCount)asalSekolahSet=new Set(Array(d.asalSekolahCount).fill('x'));
   }
 
   const pctPip=total>0?Math.round((pip/total)*100):0;
