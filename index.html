@@ -263,6 +263,29 @@ img,svg{display:block}
   background:#fff;border-radius:var(--radius-sm);border:1.5px dashed rgba(30,136,229,.15);
 }
 
+/* ── PIP INFOGRAFIS ── */
+.pip-infografis{display:flex;flex-direction:column;gap:16px}
+.pip-main-stat{display:flex;align-items:center;gap:10px;padding:12px 14px;background:var(--green-light);border-radius:var(--radius-sm);border:1px solid rgba(30,140,78,.15)}
+.pip-icon-wrap{font-size:26px;flex-shrink:0;line-height:1}
+.pip-big-num{font-family:'Plus Jakarta Sans',sans-serif;font-size:28px;font-weight:900;color:var(--green);line-height:1}
+.pip-big-label{font-size:11px;color:var(--green);font-weight:600;line-height:1.4}
+.pip-bar-section{display:flex;flex-direction:column;gap:9px}
+.pip-bar-row{display:flex;align-items:center;gap:8px}
+.pip-bar-label{font-size:10.5px;font-weight:700;width:74px;flex-shrink:0;white-space:nowrap}
+.pip-label-green{color:var(--green)}
+.pip-label-gray{color:#78909c}
+.pip-bar-track{flex:1;height:26px;background:#f0f4f8;border-radius:6px;overflow:hidden}
+.pip-bar-fill{height:100%;border-radius:6px;display:flex;align-items:center;padding-left:8px;font-size:10.5px;font-weight:700;color:#fff;transition:width 1s cubic-bezier(.22,1,.36,1);min-width:0}
+.pip-fill-green{background:linear-gradient(90deg,var(--green),#4caf50)}
+.pip-fill-gray{background:linear-gradient(90deg,#78909c,#b0bec5)}
+.pip-bar-pct{font-size:10.5px;font-weight:700;color:var(--text-muted);width:30px;text-align:right;flex-shrink:0}
+.pip-bar-val{font-size:10px;font-weight:700;white-space:nowrap}
+.pip-donut-row{display:flex;align-items:center;gap:14px;padding-top:4px}
+.pip-legend-stack{display:flex;flex-direction:column;gap:8px;flex:1}
+.pip-legend-item{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--text-mid)}
+.pip-legend-item b{margin-left:auto;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;color:var(--text-dark);font-size:13px}
+.pip-ldot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+
 /* Skeleton */
 .skeleton{
   background:linear-gradient(90deg,#e3f2fd 25%,#bbdefb 50%,#e3f2fd 75%);
@@ -385,7 +408,7 @@ img,svg{display:block}
 @media(max-width:1024px){
   .infographic-grid{grid-template-columns:repeat(2,1fr)}
   .hero-inner{grid-template-columns:1fr}
-  .hero-stats{grid-template-columns:repeat(3,1fr);min-width:0;width:100%;max-width:400px}
+  .hero-stats{grid-template-columns:repeat(3,1fr);min-width:0;width:100%;max-width:480px}
 }
 @media(max-width:768px){
   .charts-row{grid-template-columns:1fr}
@@ -400,7 +423,8 @@ img,svg{display:block}
   #toast{bottom:86px}
   .infographic-grid{grid-template-columns:1fr 1fr}
   .hero-stats{grid-template-columns:1fr 1fr;max-width:100%}
-  .hero-stats .hero-stat:last-child{grid-column:1/-1}
+  .hero-stats .hero-stat:nth-child(3){grid-column:auto}
+  .hero-stats .hero-stat:nth-child(4),.hero-stats .hero-stat:nth-child(5){grid-row:auto}
   .cta-btns{flex-direction:column;align-items:center}
   .hero-btns{flex-direction:column;gap:8px}
   #dashboard-hero{padding:76px 16px 44px}
@@ -486,12 +510,24 @@ img,svg{display:block}
           <div class="lbl">Total Pendaftar</div>
         </div>
         <div class="hero-stat">
-          <div class="num counter-num" data-target="0" data-suffix="%" data-id="persen-laki"><span class="skeleton" aria-hidden="true"></span></div>
-          <div class="lbl">Laki-laki</div>
+          <div class="num counter-num" data-target="0" data-suffix="%" data-id="persen-pip"><span class="skeleton" aria-hidden="true"></span></div>
+          <div class="lbl">Penerima PIP</div>
         </div>
         <div class="hero-stat">
           <div class="num counter-num" data-target="0" data-suffix="" data-id="jumlah-jurusan"><span class="skeleton" aria-hidden="true"></span></div>
           <div class="lbl">Jurusan Dipilih</div>
+        </div>
+        <div class="hero-stat">
+          <div class="num counter-num" data-target="0" data-suffix="" data-id="dari-negeri"><span class="skeleton" aria-hidden="true"></span></div>
+          <div class="lbl">🏛️ Sekolah Negeri</div>
+        </div>
+        <div class="hero-stat">
+          <div class="num counter-num" data-target="0" data-suffix="" data-id="dari-swasta"><span class="skeleton" aria-hidden="true"></span></div>
+          <div class="lbl">🏫 Sekolah Swasta</div>
+        </div>
+        <div class="hero-stat">
+          <div class="num counter-num" data-target="0" data-suffix="" data-id="jumlah-kecamatan"><span class="skeleton" aria-hidden="true"></span></div>
+          <div class="lbl">📍 Kecamatan</div>
         </div>
       </div>
     </div>
@@ -544,18 +580,46 @@ img,svg{display:block}
         </div>
       </div>
       <div class="chart-box">
-        <h3>Jenis Kelamin Pendaftar</h3>
-        <div class="donut-wrap">
-          <svg width="152" height="152" viewBox="0 0 160 160" style="flex-shrink:0" role="img" aria-label="Donut chart jenis kelamin">
-            <circle cx="80" cy="80" r="60" fill="none" stroke="#e3f2fd" stroke-width="26"/>
-            <circle id="donut-laki" cx="80" cy="80" r="60" fill="none" stroke="var(--blue-bright)" stroke-width="26" stroke-dasharray="0 376.99" stroke-dashoffset="0" transform="rotate(-90 80 80)" style="transition:stroke-dasharray 1s ease"/>
-            <circle id="donut-perempuan" cx="80" cy="80" r="60" fill="none" stroke="#ad1457" stroke-width="26" stroke-dasharray="0 376.99" stroke-dashoffset="0" transform="rotate(-90 80 80)" style="transition:stroke-dasharray 1s ease .2s,stroke-dashoffset 1s ease .2s"/>
-            <text id="donut-center" x="80" y="75" text-anchor="middle" font-family="Plus Jakarta Sans,sans-serif" font-size="19" font-weight="900" fill="var(--blue-deep)">–</text>
-            <text x="80" y="93" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="9.5" fill="#607d9e">Total</text>
-          </svg>
-          <div class="donut-legend">
-            <div class="legend-item"><div class="legend-dot" style="background:var(--blue-bright)"></div>Laki-laki<span id="legend-laki" class="legend-pct">–</span></div>
-            <div class="legend-item"><div class="legend-dot" style="background:#ad1457"></div>Perempuan<span id="legend-perempuan" class="legend-pct">–</span></div>
+        <h3>Penerima PIP (Program Indonesia Pintar)</h3>
+        <div class="pip-infografis">
+          <div class="pip-main-stat">
+            <div class="pip-icon-wrap">🎓</div>
+            <div class="pip-big-num" id="pip-pct-display">–%</div>
+            <div class="pip-big-label">pendaftar penerima PIP</div>
+          </div>
+          <div class="pip-bar-section">
+            <div class="pip-bar-row">
+              <span class="pip-bar-label pip-label-green">✅ PIP</span>
+              <div class="pip-bar-track">
+                <div class="pip-bar-fill pip-fill-green" id="pip-bar-fill" style="width:0%">
+                  <span class="pip-bar-val" id="pip-bar-val">0</span>
+                </div>
+              </div>
+              <span class="pip-bar-pct" id="pip-bar-pct">0%</span>
+            </div>
+            <div class="pip-bar-row">
+              <span class="pip-bar-label pip-label-gray">❌ Non-PIP</span>
+              <div class="pip-bar-track">
+                <div class="pip-bar-fill pip-fill-gray" id="nonpip-bar-fill" style="width:0%">
+                  <span class="pip-bar-val" id="nonpip-bar-val">0</span>
+                </div>
+              </div>
+              <span class="pip-bar-pct" id="nonpip-bar-pct">0%</span>
+            </div>
+          </div>
+          <div class="pip-donut-row">
+            <svg width="88" height="88" viewBox="0 0 88 88" role="img" aria-label="Proporsi PIP">
+              <circle cx="44" cy="44" r="34" fill="none" stroke="#e8f5e9" stroke-width="16"/>
+              <circle id="pip-donut-arc" cx="44" cy="44" r="34" fill="none" stroke="var(--green)" stroke-width="16"
+                stroke-dasharray="0 213.63" stroke-dashoffset="0" transform="rotate(-90 44 44)"
+                style="transition:stroke-dasharray 1.1s cubic-bezier(.22,1,.36,1)"/>
+              <text id="pip-donut-center" x="44" y="49" text-anchor="middle"
+                font-family="Plus Jakarta Sans,sans-serif" font-size="13" font-weight="900" fill="var(--green)">–</text>
+            </svg>
+            <div class="pip-legend-stack">
+              <div class="pip-legend-item"><span class="pip-ldot" style="background:var(--green)"></span><span>Penerima PIP</span><b id="pip-legend-pip">–</b></div>
+              <div class="pip-legend-item"><span class="pip-ldot" style="background:#b0bec5"></span><span>Non-PIP</span><b id="pip-legend-nonpip">–</b></div>
+            </div>
           </div>
         </div>
       </div>
@@ -835,22 +899,45 @@ function updateBarChart(jurusanData){
   });
 }
 
-/* ── DONUT JENIS KELAMIN ── */
-function updateDonut(laki,perempuan){
-  const circ=2*Math.PI*60;
-  const total=(laki+perempuan)||1;
-  const lenLaki=(laki/total)*circ;
-  const lenPerempuan=(perempuan/total)*circ;
-  const dL=document.getElementById('donut-laki');
-  const dP=document.getElementById('donut-perempuan');
-  const dc=document.getElementById('donut-center');
-  const legL=document.getElementById('legend-laki');
-  const legP=document.getElementById('legend-perempuan');
-  if(dL){dL.style.strokeDasharray=`${lenLaki} ${circ}`;dL.style.strokeDashoffset='0';}
-  if(dP){dP.style.strokeDasharray=`${lenPerempuan} ${circ}`;dP.style.strokeDashoffset=`-${lenLaki}`;}
-  if(dc)dc.textContent=total;
-  if(legL)legL.textContent=((laki/total)*100).toFixed(1)+'%';
-  if(legP)legP.textContent=((perempuan/total)*100).toFixed(1)+'%';
+/* ── PIP INFOGRAFIS UPDATE ── */
+function updatePIP(pip,total){
+  const nonpip=Math.max(total-pip,0);
+  const pctPip=total>0?Math.round((pip/total)*100):0;
+  const pctNon=total>0?(100-pctPip):0;
+  const circ=2*Math.PI*34;
+  const lenPip=(pip/(total||1))*circ;
+
+  /* big stat */
+  const dispEl=document.getElementById('pip-pct-display');
+  if(dispEl)dispEl.textContent=pctPip+'%';
+
+  /* bars */
+  requestAnimationFrame(()=>{
+    const pipFill=document.getElementById('pip-bar-fill');
+    const nonFill=document.getElementById('nonpip-bar-fill');
+    if(pipFill){pipFill.style.width=pctPip+'%';}
+    if(nonFill){nonFill.style.width=pctNon+'%';}
+  });
+  const pv=document.getElementById('pip-bar-val');
+  const nv=document.getElementById('nonpip-bar-val');
+  const pp=document.getElementById('pip-bar-pct');
+  const np=document.getElementById('nonpip-bar-pct');
+  if(pv)pv.textContent=pip;
+  if(nv)nv.textContent=nonpip;
+  if(pp)pp.textContent=pctPip+'%';
+  if(np)np.textContent=pctNon+'%';
+
+  /* donut */
+  const arc=document.getElementById('pip-donut-arc');
+  if(arc){arc.style.strokeDasharray=`${lenPip} ${circ}`;}
+  const dc=document.getElementById('pip-donut-center');
+  if(dc)dc.textContent=pctPip+'%';
+
+  /* legend */
+  const lp=document.getElementById('pip-legend-pip');
+  const ln=document.getElementById('pip-legend-nonpip');
+  if(lp)lp.textContent=pip+' siswa';
+  if(ln)ln.textContent=nonpip+' siswa';
 }
 
 /* ── WILAYAH TABLE ── */
@@ -1011,7 +1098,7 @@ function clearCache(){_memCache=null;}
 /* ── RENDER DATA ── */
 function renderData(d,source){
   /* ----- Hitung statistik dari data mentah jika tersedia ----- */
-  let total=0,laki=0,perempuan=0,pip=0,asalSekolahSet=new Set();
+  let total=0,laki=0,perempuan=0,pip=0,negeri=0,swasta=0,asalSekolahSet=new Set();
   const jurusanCount={},kecCount={},kabCount={};
 
   /* Coba parse rows mentah dari Apps Script SPMB */
@@ -1022,8 +1109,14 @@ function renderData(d,source){
       const jk=(r.jenisKelamin||r.jenis_kelamin||'').toLowerCase();
       if(jk==='perempuan')perempuan++;else laki++;
       if((r.pip||'').toLowerCase()==='ya'||(r.pip||'')==='1')pip++;
-      const sek=r.namaSekolah||r.nama_sekolah||'';
-      if(sek)asalSekolahSet.add(sek.trim().toLowerCase());
+      const sek=(r.namaSekolah||r.nama_sekolah||'').trim();
+      if(sek){
+        asalSekolahSet.add(sek.toLowerCase());
+        /* Deteksi negeri vs swasta dari nama sekolah */
+        const sekLow=sek.toLowerCase();
+        if(/\b(negeri|smpn|mtsn|sdn|n\s*\d)\b/.test(sekLow)||/ n\d/.test(sekLow)||sekLow.includes(' negeri'))negeri++;
+        else swasta++;
+      }
       const j1=normJurusan(r.pilihan1||r.jurusan||'');
       if(j1&&j1!=='Lainnya')jurusanCount[j1]=(jurusanCount[j1]||0)+1;
       const kec=(r.kecamatanSekolah||r.kecamatan_sekolah||r.kecamatan||'').trim();
@@ -1037,18 +1130,23 @@ function renderData(d,source){
     laki=d.laki||d.lakiLaki||0;
     perempuan=d.perempuan||0;
     pip=d.pip||0;
+    negeri=d.negeri||0;
+    swasta=d.swasta||0;
     if(d.jurusan)Object.assign(jurusanCount,d.jurusan);
     if(d.kecamatan)Object.assign(kecCount,d.kecamatan);
     if(d.kabupaten)Object.assign(kabCount,d.kabupaten);
     if(d.asalSekolah)asalSekolahSet=new Set(Object.keys(d.asalSekolah||{}));
   }
 
-  const pctLaki=total>0?Math.round((laki/total)*100):0;
+  const pctPip=total>0?Math.round((pip/total)*100):0;
   const jmlJurusan=Object.keys(jurusanCount).length;
 
   setHeroCounter('total',total,'');
-  setHeroCounter('persen-laki',pctLaki,'%');
+  setHeroCounter('persen-pip',pctPip,'%');
   setHeroCounter('jumlah-jurusan',jmlJurusan||7,'');
+  setHeroCounter('dari-negeri',negeri,'');
+  setHeroCounter('dari-swasta',swasta,'');
+  setHeroCounter('jumlah-kecamatan',Object.keys(kecCount).length,'');
   setBigNum('laki',laki);
   setBigNum('perempuan',perempuan);
   setBigNum('pip',pip);
@@ -1057,7 +1155,7 @@ function renderData(d,source){
   if(Object.keys(jurusanCount).length>0){updateBarChart(jurusanCount);}
   else{document.getElementById('bar-chart-jurusan').innerHTML='<div style="color:var(--text-muted);font-size:13px;padding:18px 0;text-align:center">Belum ada data pilihan jurusan.</div>';}
 
-  if(total>0)updateDonut(laki,perempuan);
+  if(total>0)updatePIP(pip,total);
   updateWilayah(kecCount,kabCount);
 
   /* Pendaftar grid */
@@ -1082,8 +1180,11 @@ function renderData(d,source){
 /* ── FALLBACK DATA (estimasi) ── */
 function loadFallbackData(){
   setHeroCounter('total',247,'');
-  setHeroCounter('persen-laki',58,'%');
+  setHeroCounter('persen-pip',36,'%');
   setHeroCounter('jumlah-jurusan',7,'');
+  setHeroCounter('dari-negeri',158,'');
+  setHeroCounter('dari-swasta',89,'');
+  setHeroCounter('jumlah-kecamatan',10,'');
   setBigNum('laki',143);
   setBigNum('perempuan',104);
   setBigNum('pip',89);
@@ -1093,7 +1194,7 @@ function loadFallbackData(){
     'Akuntansi Keuangan Lembaga':34,'Desain Komunikasi Visual':28,
     'Manajemen Perkantoran':22,'Teknik Sepeda Motor':15,
   });
-  updateDonut(143,104);
+  updatePIP(89,247);
   updateWilayah(
     {'Garut Kota':68,'Tarogong Kidul':42,'Banyuresmi':28,'Cilawu':22,'Karangtengah':18,'Wanaraja':16,'Samarang':15,'Bayongbong':14,'Karangpawitan':12,'Tarogong Kaler':12},
     {'Garut':236,'Tasikmalaya':5,'Bandung':4,'Ciamis':2}
