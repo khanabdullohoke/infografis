@@ -1200,21 +1200,8 @@ function loadFallbackData(){
     {'Garut Kota':68,'Tarogong Kidul':42,'Banyuresmi':28,'Cilawu':22,'Karangtengah':18,'Wanaraja':16,'Samarang':15,'Bayongbong':14,'Karangpawitan':12,'Tarogong Kaler':12},
     {'Garut':236,'Tasikmalaya':5,'Bandung':4,'Ciamis':2}
   );
-  /* Contoh pendaftar sampel */
-  _allPendaftar=[
-    {namaLengkap:'Ahmad Fauzi',jenisKelamin:'Laki-laki',pip:'Ya',pilihan1:'tkr',namaSekolah:'SMP N 1 Garut',kecamatanSekolah:'Garut Kota',kabupatenSekolah:'Garut'},
-    {namaLengkap:'Siti Rahayu',jenisKelamin:'Perempuan',pip:'Tidak',pilihan1:'akl',namaSekolah:'MTs Al Musaddadiyah',kecamatanSekolah:'Tarogong Kidul',kabupatenSekolah:'Garut'},
-    {namaLengkap:'Rizki Maulana',jenisKelamin:'Laki-laki',pip:'Ya',pilihan1:'tjk',pilihan2:'bd',namaSekolah:'SMP N 3 Garut',kecamatanSekolah:'Banyuresmi',kabupatenSekolah:'Garut'},
-    {namaLengkap:'Dewi Sartika',jenisKelamin:'Perempuan',pip:'Tidak',pilihan1:'dkv',namaSekolah:'SMP Muhammadiyah 1 Garut',kecamatanSekolah:'Karangtengah',kabupatenSekolah:'Garut'},
-    {namaLengkap:'Muhamad Haikal',jenisKelamin:'Laki-laki',pip:'Ya',pilihan1:'tsm',namaSekolah:'MTs Negeri 1 Garut',kecamatanSekolah:'Wanaraja',kabupatenSekolah:'Garut'},
-    {namaLengkap:'Nurul Fauziah',jenisKelamin:'Perempuan',pip:'Tidak',pilihan1:'mp',namaSekolah:'SMP N 2 Garut',kecamatanSekolah:'Cilawu',kabupatenSekolah:'Garut'},
-    {namaLengkap:'Dika Firmansyah',jenisKelamin:'Laki-laki',pip:'Ya',pilihan1:'tkr',pilihan2:'tsm',namaSekolah:'SMP N 5 Garut',kecamatanSekolah:'Samarang',kabupatenSekolah:'Garut'},
-    {namaLengkap:'Laila Nur Azizah',jenisKelamin:'Perempuan',pip:'Ya',pilihan1:'bd',namaSekolah:'SMP IT Al Amanah',kecamatanSekolah:'Tarogong Kaler',kabupatenSekolah:'Garut'},
-    {namaLengkap:'Yoga Pratama',jenisKelamin:'Laki-laki',pip:'Tidak',pilihan1:'tjk',namaSekolah:'SMP N 4 Garut',kecamatanSekolah:'Bayongbong',kabupatenSekolah:'Garut'},
-    {namaLengkap:'Fina Salsabila',jenisKelamin:'Perempuan',pip:'Tidak',pilihan1:'akl',pilihan2:'mp',namaSekolah:'MTs Ciledug',kecamatanSekolah:'Garut Kota',kabupatenSekolah:'Garut'},
-    {namaLengkap:'Ridwan Effendi',jenisKelamin:'Laki-laki',pip:'Ya',pilihan1:'tkr',namaSekolah:'SMP Pasundan 1 Garut',kecamatanSekolah:'Karangpawitan',kabupatenSekolah:'Garut'},
-    {namaLengkap:'Citra Amelia',jenisKelamin:'Perempuan',pip:'Tidak',pilihan1:'dkv',namaSekolah:'SMP N 6 Garut',kecamatanSekolah:'Leles',kabupatenSekolah:'Garut'},
-  ];
+  /* Grid pendaftar dikosongkan — data individual tidak tersedia dari API */
+  _allPendaftar=[];
   _pendaftarPage=0;
   renderPendaftarPage();
   const ts=document.getElementById('data-timestamp');
