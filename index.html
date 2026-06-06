@@ -845,15 +845,16 @@ function animateCounter(el,target,suffix){
   const t=target!==undefined?target:parseInt(el.dataset.target,10);
   const s=suffix!==undefined?suffix:(el.dataset.suffix||'');
   if(isNaN(t))return;
+  if(el._rafId){cancelAnimationFrame(el._rafId);el._rafId=null;}
   const dur=1500;
   const start=performance.now();
   function step(now){
     const p=Math.min((now-start)/dur,1);
     const ease=1-Math.pow(1-p,4);
     el.textContent=Math.round(t*ease)+s;
-    if(p<1)requestAnimationFrame(step);
+    if(p<1){el._rafId=requestAnimationFrame(step);}else{el._rafId=null;}
   }
-  requestAnimationFrame(step);
+  el._rafId=requestAnimationFrame(step);
 }
 
 function setHeroCounter(id,value,suffix){
@@ -901,6 +902,7 @@ window.addEventListener('scroll',()=>{
 /* ── TOAST ── */
 function showToast(msg,isErr=true){
   const t=document.getElementById('toast');
+  if(!t)return;
   t.textContent=msg;
   t.style.background=isErr?'#e53935':'var(--green)';
   t.classList.add('show');
@@ -908,7 +910,7 @@ function showToast(msg,isErr=true){
 }
 
 /* ── HTML ESCAPE ── */
-function esc(str){if(!str)return'';return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function esc(str){if(!str)return'';return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#x27;');}
 
 /* ── BAR CHART JURUSAN ── */
 function updateBarChart(jurusanData){
@@ -1052,12 +1054,12 @@ function renderPendaftarPage(){
     const asalSek=p.namaSekolah||p.asalSekolah||'–';
     const kec=p.kecamatanSekolah||p.kecamatan||'–';
     const pipStatus=((p.pip||'').toLowerCase()==='ya'||p.pip==='1'||p.pip===true)?'✅ PIP':'';
-    const nama=p.namaLengkap||p.nama||'Anonim';
+    const nama=esc(p.namaLengkap||p.nama||'Anonim');
     return`<article class="pendaftar-card">
       <div class="pd-header" style="background:${grad}">
         <div class="pd-avatar" style="background:rgba(255,255,255,.15)">${esc(initial)}</div>
         <div>
-          <div class="pd-name">${esc(nama)}</div>
+          <div class="pd-name">${nama}</div>
           <div class="pd-sub">${jkEmoji} ${jkLabel}${pipStatus?' · '+pipStatus:''}</div>
         </div>
       </div>
@@ -1089,17 +1091,21 @@ function renderPendaftarPage(){
   if(cnt)cnt.textContent=`${_allPendaftar.length} pendaftar terdaftar`;
 }
 
+let _pendaftarAnimating=false;
 function pendaftarPage(dir){
+  if(_pendaftarAnimating)return;
   const totalPages=Math.ceil(_allPendaftar.length/PER_PAGE);
   const newPage=_pendaftarPage+dir;
   if(newPage<0||newPage>=totalPages)return;
   const grid=document.getElementById('pendaftar-grid');
   if(grid){
+    _pendaftarAnimating=true;
     grid.classList.add('animating');
     setTimeout(()=>{
       _pendaftarPage=newPage;
       renderPendaftarPage();
       grid.classList.remove('animating');
+      _pendaftarAnimating=false;
     },230);
   }else{_pendaftarPage=newPage;renderPendaftarPage();}
 }
@@ -1239,12 +1245,12 @@ function loadFallbackData(){
 }
 
 /* ── DATA LOADER ── */
-let refreshTimer=setInterval(()=>loadData(false),10*60*1000);
+let refreshTimer=null;
 let _ctrl=null;
 
 async function loadData(forceRefresh=false){
   if(_ctrl){try{_ctrl.abort();}catch(_){}_ctrl=null;}
-  if(forceRefresh){clearInterval(refreshTimer);refreshTimer=setInterval(()=>loadData(false),10*60*1000);clearCache();}
+  if(forceRefresh){if(refreshTimer){clearInterval(refreshTimer);}refreshTimer=setInterval(()=>loadData(false),10*60*1000);clearCache();}
   const refreshBtn=document.getElementById('refresh-btn');
   if(refreshBtn)refreshBtn.classList.add('spinning');
 
@@ -1289,13 +1295,16 @@ document.addEventListener('visibilitychange',()=>{
   if(document.hidden){
     clearInterval(refreshTimer);
   }else{
-    loadData(false);
     clearInterval(refreshTimer);
+    loadData(false);
     refreshTimer=setInterval(()=>loadData(false),10*60*1000);
   }
 });
 
-document.addEventListener('DOMContentLoaded',()=>loadData(false));
+document.addEventListener('DOMContentLoaded',()=>{
+  refreshTimer=setInterval(()=>loadData(false),10*60*1000);
+  loadData(false);
+});
 </script>
 </body>
 </html>
