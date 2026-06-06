@@ -540,7 +540,7 @@ img,svg{display:block}
     <div class="section-header">
       <div class="section-label">Data Pendaftar SPMB</div>
       <h2 class="section-title">Infografis <em>Pendaftar SMKS Ciledug Al Musaddadiyah</em></h2>
-      <p class="section-sub">Visualisasi data pendaftar SPMB 2026/2027 real-time dari Google Sheets. <span id="data-timestamp" style="font-weight:600;color:var(--blue-mid)">Memuat data...</span></p>
+      <p class="section-sub">Visualisasi data pendaftar SPMB 2026/2027 real-time dari Database SMK Ciledug Al Musaddadiyah. <span id="data-timestamp" style="font-weight:600;color:var(--blue-mid)">Memuat data...</span></p>
       <div id="data-status-badge" class="data-status" style="display:none" role="status" aria-live="polite"></div>
       <button class="refresh-btn" onclick="loadData(true)" id="refresh-btn" aria-label="Perbarui data">
         <span class="refresh-icon" id="refresh-icon">🔄</span> Perbarui Data
@@ -892,7 +892,7 @@ function updateBarChart(jurusanData){
   container.innerHTML=sorted.slice(0,8).map(([nama,jumlah],i)=>{
     const pct=Math.round((jumlah/max)*100);
     const shortName=nama.length>14?nama.substring(0,14)+'…':nama;
-    return`<div class="bar-row"><div class="bar-label" title="${esc(nama)}">${esc(shortName)}</div><div class="bar-track"><div class="bar-fill" style="width:0%;background:${colors[i%colors.length]}" data-pct="${pct}">${parseInt(jumlah)||0}</div></div><div class="bar-pct">${parseInt(jumlah)||0}</div></div>`;
+    return`<div class="bar-row"><div class="bar-label" title="${esc(nama)}">${esc(shortName)}</div><div class="bar-track"><div class="bar-fill" style="width:0%;background:${colors[i%colors.length]}" data-pct="${pct}">${parseInt(jumlah)||0}</div></div><div class="bar-pct">${pct}%</div></div>`;
   }).join('');
   requestAnimationFrame(()=>{
     container.querySelectorAll('.bar-fill').forEach(bar=>{bar.style.width=bar.dataset.pct+'%';});
@@ -1171,7 +1171,7 @@ function renderData(d,source){
   const badge=document.getElementById('data-status-badge');
   if(source==='live'){
     if(ts)ts.textContent=d.lastUpdated?'Data per '+d.lastUpdated:'Data ter-update barusan';
-    if(badge){badge.style.display='inline-flex';badge.className='data-status live';badge.textContent='Data Live dari Google Sheets';}
+    if(badge){badge.style.display='inline-flex';badge.className='data-status live';badge.textContent='Data Live — Database SMK Ciledug Al Musaddadiyah';}
   } else if(source==='cache'){
     if(ts)ts.textContent='Data dari cache lokal';
     if(badge){badge.style.display='inline-flex';badge.className='data-status live';badge.textContent='Cache — memperbarui...';}
