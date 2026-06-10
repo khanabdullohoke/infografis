@@ -1272,12 +1272,11 @@ function renderData(d,source){
   if(total>0)updatePIP(pip,total);
   updateWilayah(kecCount,kabCount);
 
-  /* Pendaftar grid — gunakan rows yang sudah ternormalisasi */
-  if(rows.length>0){
-    _allPendaftar=rows;
-    _pendaftarPage=0;
-    renderPendaftarPage();
-  }
+  /* Pendaftar grid — selalu update grid saat data live/cache diterima,
+     agar tidak tertimpa data dummy dari fallback */
+  _allPendaftar=rows;
+  _pendaftarPage=0;
+  renderPendaftarPage();
 
   /* Timestamp & status */
   const ts=document.getElementById('data-timestamp');
