@@ -484,8 +484,8 @@ img,svg{display:block}
       <a class="nav-link" href="#pendaftar-list">👥 Pendaftar</a>
     </div>
     <div class="nav-right">
-      <a class="btn-gold" href="index.html">
-        📝 Daftar SPMB
+      <a class="btn-gold" href="https://www.smkciledugalmusaddadiyah.sch.id" target="_blank" rel="noopener">
+        🏫 Website Sekolah
       </a>
     </div>
   </div>
@@ -505,10 +505,6 @@ img,svg{display:block}
     <a class="mobile-nav-btn" href="#pendaftar-list">
       <div class="mn-icon">👥</div>
       <div class="mn-label">Pendaftar</div>
-    </a>
-    <a class="mobile-nav-btn" href="index.html">
-      <div class="mn-icon">📝</div>
-      <div class="mn-label">Daftar</div>
     </a>
   </div>
 </nav>
@@ -729,7 +725,7 @@ img,svg{display:block}
       <div class="tl-item">
         <div class="tl-dot"></div>
         <div class="tl-card">
-          <div class="tl-year">13 – 20 Jul 2026</div>
+          <div class="tl-year">14 – 18 Jul 2026</div>
           <div class="tl-title">📝 Daftar Ulang</div>
           <div class="tl-desc">Peserta yang dinyatakan diterima melakukan daftar ulang dan melengkapi berkas administrasi di sekolah.</div>
         </div>
@@ -737,7 +733,7 @@ img,svg{display:block}
       <div class="tl-item">
         <div class="tl-dot"></div>
         <div class="tl-card">
-          <div class="tl-year">21 Jul 2026</div>
+          <div class="tl-year">14 Jul 2026</div>
           <div class="tl-title">🎓 Tahun Pelajaran Baru Dimulai</div>
           <div class="tl-desc">Peserta didik baru resmi bergabung bersama keluarga besar SMKS Ciledug Al Musaddadiyah Garut Tahun Pelajaran 2026/2027.</div>
         </div>
@@ -775,7 +771,7 @@ img,svg{display:block}
       <h2>Bergabunglah bersama<br><em>SMKS Ciledug Al Musaddadiyah</em></h2>
       <p>Pendaftaran SPMB Online 2026/2027 masih dibuka. Pilih jurusanmu dan wujudkan masa depan bersama kami.</p>
       <div class="cta-btns">
-        <a class="btn-gold" href="index.html">
+        <a class="btn-gold" href="https://www.smkciledugalmusaddadiyah.sch.id/p/ppdb-online-smk-ciledug-al-musaddadiyah.html" target="_blank" rel="noopener">
           📋 Daftar Online Sekarang
         </a>
         <a class="btn-ghost" href="https://wa.me/62262489218" target="_blank" rel="noopener">
@@ -789,10 +785,9 @@ img,svg{display:block}
 <!-- FOOTER -->
 <footer id="spmb-footer">
   <p class="footer-title">SMKS Ciledug Al Musaddadiyah Garut</p>
-  <p>📍 Jl. Mayor Syamsu No. 02 Garut 44151 · 📞 <a href="tel:+622624892181">(0262) 4892181</a></p>
+  <p>📍 Jl. Mayor Syamsu No. 02 Garut 44151 · 📞 <a href="tel:+62262489218">(0262) 489218</a></p>
   <p class="footer-links">
     <a href="https://www.smkciledugalmusaddadiyah.sch.id" target="_blank" rel="noopener">Website Sekolah</a> ·
-    <a href="index.html">📝 Form Pendaftaran</a> ·
     <a href="https://www.instagram.com/smkscalm_official/" target="_blank" rel="noopener">Instagram</a>
   </p>
   <p class="footer-copy">© 2026 SMKS Ciledug Al Musaddadiyah · Infografis SPMB 2026/2027</p>
@@ -803,7 +798,7 @@ img,svg{display:block}
 
 <script>
 /* ── CONFIG ── */
-/* URL Apps Script SPMB — endpoint yang sama dengan form SPMB */
+/* URL Apps Script SPMB — ambil dari endpoint yang sama dengan form SPMB */
 const APPS_SCRIPT_URL='https://script.google.com/macros/s/AKfycbzJuZDxkC-mGEWzwplPTU5Y8ucW9BZGp2ZEhRiFFQGPSiYQ8NpEC1TA5KmQzgaYAIqw/exec';
 
 /* ── JURUSAN MAP (normalisasi) ── */
@@ -812,7 +807,7 @@ const JURUSAN_MAP={
   'bisnis digital':'Bisnis Digital','bd':'Bisnis Digital','bisnis daring dan pemasaran':'Bisnis Digital','bdp':'Bisnis Digital','pemasaran':'Bisnis Digital',
   'manajemen perkantoran':'Manajemen Perkantoran','mp':'Manajemen Perkantoran','otomatisasi tata kelola perkantoran':'Manajemen Perkantoran','otkp':'Manajemen Perkantoran','administrasi perkantoran':'Manajemen Perkantoran',
   'desain komunikasi visual':'Desain Komunikasi Visual','dkv':'Desain Komunikasi Visual','multimedia':'Desain Komunikasi Visual',
-  'teknik jaringan komputer':'Teknik Komputer & Jaringan','tjk':'Teknik Komputer & Jaringan','teknik komputer dan jaringan':'Teknik Komputer & Jaringan','tkj':'Teknik Komputer & Jaringan','teknik komputer & jaringan':'Teknik Komputer & Jaringan',
+  'teknik jaringan komputer':'Teknik Jaringan Komputer','tjk':'Teknik Jaringan Komputer','teknik komputer dan jaringan':'Teknik Jaringan Komputer','tkj':'Teknik Jaringan Komputer',
   'teknik kendaraan ringan':'Teknik Kendaraan Ringan','tkr':'Teknik Kendaraan Ringan',
   'teknik sepeda motor':'Teknik Sepeda Motor','tsm':'Teknik Sepeda Motor',
 };
@@ -1230,7 +1225,7 @@ function loadFallbackData(){
   setBigNum('pip',89);
   setBigNum('asal-sekolah',32);
   updateBarChart({
-    'Teknik Kendaraan Ringan':62,'Teknik Komputer & Jaringan':48,'Bisnis Digital':38,
+    'Teknik Kendaraan Ringan':62,'Teknik Jaringan Komputer':48,'Bisnis Digital':38,
     'Akuntansi Keuangan Lembaga':34,'Desain Komunikasi Visual':28,
     'Manajemen Perkantoran':22,'Teknik Sepeda Motor':15,
   });
