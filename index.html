@@ -484,8 +484,8 @@ img,svg{display:block}
       <a class="nav-link" href="#pendaftar-list">👥 Pendaftar</a>
     </div>
     <div class="nav-right">
-      <a class="btn-gold" href="https://www.smkciledugalmusaddadiyah.sch.id" target="_blank" rel="noopener">
-        🏫 Website Sekolah
+      <a class="btn-gold" href="index.html">
+        📝 Daftar SPMB
       </a>
     </div>
   </div>
@@ -505,6 +505,10 @@ img,svg{display:block}
     <a class="mobile-nav-btn" href="#pendaftar-list">
       <div class="mn-icon">👥</div>
       <div class="mn-label">Pendaftar</div>
+    </a>
+    <a class="mobile-nav-btn" href="index.html">
+      <div class="mn-icon">📝</div>
+      <div class="mn-label">Daftar</div>
     </a>
   </div>
 </nav>
@@ -725,7 +729,7 @@ img,svg{display:block}
       <div class="tl-item">
         <div class="tl-dot"></div>
         <div class="tl-card">
-          <div class="tl-year">14 – 18 Jul 2026</div>
+          <div class="tl-year">13 – 20 Jul 2026</div>
           <div class="tl-title">📝 Daftar Ulang</div>
           <div class="tl-desc">Peserta yang dinyatakan diterima melakukan daftar ulang dan melengkapi berkas administrasi di sekolah.</div>
         </div>
@@ -733,7 +737,7 @@ img,svg{display:block}
       <div class="tl-item">
         <div class="tl-dot"></div>
         <div class="tl-card">
-          <div class="tl-year">14 Jul 2026</div>
+          <div class="tl-year">21 Jul 2026</div>
           <div class="tl-title">🎓 Tahun Pelajaran Baru Dimulai</div>
           <div class="tl-desc">Peserta didik baru resmi bergabung bersama keluarga besar SMKS Ciledug Al Musaddadiyah Garut Tahun Pelajaran 2026/2027.</div>
         </div>
@@ -771,7 +775,7 @@ img,svg{display:block}
       <h2>Bergabunglah bersama<br><em>SMKS Ciledug Al Musaddadiyah</em></h2>
       <p>Pendaftaran SPMB Online 2026/2027 masih dibuka. Pilih jurusanmu dan wujudkan masa depan bersama kami.</p>
       <div class="cta-btns">
-        <a class="btn-gold" href="https://www.smkciledugalmusaddadiyah.sch.id/p/ppdb-online-smk-ciledug-al-musaddadiyah.html" target="_blank" rel="noopener">
+        <a class="btn-gold" href="index.html">
           📋 Daftar Online Sekarang
         </a>
         <a class="btn-ghost" href="https://wa.me/62262489218" target="_blank" rel="noopener">
@@ -785,9 +789,10 @@ img,svg{display:block}
 <!-- FOOTER -->
 <footer id="spmb-footer">
   <p class="footer-title">SMKS Ciledug Al Musaddadiyah Garut</p>
-  <p>📍 Jl. Mayor Syamsu No. 02 Garut 44151 · 📞 <a href="tel:+62262489218">(0262) 489218</a></p>
+  <p>📍 Jl. Mayor Syamsu No. 02 Garut 44151 · 📞 <a href="tel:+622624892181">(0262) 4892181</a></p>
   <p class="footer-links">
     <a href="https://www.smkciledugalmusaddadiyah.sch.id" target="_blank" rel="noopener">Website Sekolah</a> ·
+    <a href="index.html">📝 Form Pendaftaran</a> ·
     <a href="https://www.instagram.com/smkscalm_official/" target="_blank" rel="noopener">Instagram</a>
   </p>
   <p class="footer-copy">© 2026 SMKS Ciledug Al Musaddadiyah · Infografis SPMB 2026/2027</p>
@@ -798,8 +803,51 @@ img,svg{display:block}
 
 <script>
 /* ── CONFIG ── */
-/* URL Apps Script SPMB — ambil dari endpoint yang sama dengan form SPMB */
+/* URL Apps Script SPMB — endpoint yang sama dengan form SPMB */
 const APPS_SCRIPT_URL='https://script.google.com/macros/s/AKfycbzJuZDxkC-mGEWzwplPTU5Y8ucW9BZGp2ZEhRiFFQGPSiYQ8NpEC1TA5KmQzgaYAIqw/exec';
+
+/* ══════════════════════════════════════════════════════════════════
+   PANDUAN APPS SCRIPT — tambahkan fungsi ini di Apps Script SPMB
+   agar endpoint ?action=getInfografis mengembalikan data pendaftar.
+
+   Di Apps Script (script.google.com), tambahkan ke doGet(e):
+
+   function doGet(e) {
+     var action = e && e.parameter && e.parameter.action;
+     if (action === 'getInfografis') {
+       return getInfografisResponse();
+     }
+     // ... sisa kode doGet yang sudah ada (jangan diubah)
+   }
+
+   function getInfografisResponse() {
+     try {
+       var ss = SpreadsheetApp.getActiveSpreadsheet();
+       var sheet = ss.getSheetByName('Pendaftar') || ss.getSheets()[0];
+       var data = sheet.getDataRange().getValues();
+       var headers = data[0].map(function(h){ return String(h).trim(); });
+       var rows = [];
+       for (var i = 1; i < data.length; i++) {
+         if (!data[i][0]) continue; // skip baris kosong
+         var row = {};
+         headers.forEach(function(h, idx) { row[h] = data[i][idx]; });
+         rows.push(row);
+       }
+       var out = { rows: rows, lastUpdated: new Date().toLocaleString('id-ID') };
+       return ContentService
+         .createTextOutput(JSON.stringify(out))
+         .setMimeType(ContentService.MimeType.JSON);
+     } catch(err) {
+       return ContentService
+         .createTextOutput(JSON.stringify({ error: err.message }))
+         .setMimeType(ContentService.MimeType.JSON);
+     }
+   }
+
+   Nama sheet bisa disesuaikan ('Pendaftar', 'Form Responses 1', dll).
+   Kolom di Sheet harus memiliki header di baris pertama.
+   Nama header Sheet akan otomatis dipetakan ke field yang benar.
+   ══════════════════════════════════════════════════════════════════ */
 
 /* ── JURUSAN MAP (normalisasi) ── */
 const JURUSAN_MAP={
@@ -807,7 +855,7 @@ const JURUSAN_MAP={
   'bisnis digital':'Bisnis Digital','bd':'Bisnis Digital','bisnis daring dan pemasaran':'Bisnis Digital','bdp':'Bisnis Digital','pemasaran':'Bisnis Digital',
   'manajemen perkantoran':'Manajemen Perkantoran','mp':'Manajemen Perkantoran','otomatisasi tata kelola perkantoran':'Manajemen Perkantoran','otkp':'Manajemen Perkantoran','administrasi perkantoran':'Manajemen Perkantoran',
   'desain komunikasi visual':'Desain Komunikasi Visual','dkv':'Desain Komunikasi Visual','multimedia':'Desain Komunikasi Visual',
-  'teknik jaringan komputer':'Teknik Jaringan Komputer','tjk':'Teknik Jaringan Komputer','teknik komputer dan jaringan':'Teknik Jaringan Komputer','tkj':'Teknik Jaringan Komputer',
+  'teknik jaringan komputer':'Teknik Komputer & Jaringan','tjk':'Teknik Komputer & Jaringan','teknik komputer dan jaringan':'Teknik Komputer & Jaringan','tkj':'Teknik Komputer & Jaringan','teknik komputer & jaringan':'Teknik Komputer & Jaringan',
   'teknik kendaraan ringan':'Teknik Kendaraan Ringan','tkr':'Teknik Kendaraan Ringan',
   'teknik sepeda motor':'Teknik Sepeda Motor','tsm':'Teknik Sepeda Motor',
 };
@@ -1129,33 +1177,64 @@ function loadCache(){
 }
 function clearCache(){_memCache=null;}
 
+/* ── NORMALISASI FIELD ROW ── */
+/* Fungsi ini memetakan berbagai variasi nama kolom Google Sheet
+   ke nama field standar yang dipakai renderData & renderPendaftarPage.
+   Tidak mengubah logika apapun — hanya menambah alias field. */
+function normRow(r){
+  if(!r||typeof r!=='object')return r;
+  /* Helper ambil nilai dari banyak kemungkinan nama kunci */
+  function pick(){for(let i=0;i<arguments.length;i++){const v=r[arguments[i]];if(v!==undefined&&v!==null&&v!=='')return v;}return'';}
+  return {
+    /* Pertahankan semua field asli dulu */
+    ...r,
+    /* Tambahkan/perkuat alias field yang paling sering beda nama */
+    namaLengkap: pick('namaLengkap','nama_lengkap','nama','Nama Lengkap','Nama','name','fullName'),
+    jenisKelamin: pick('jenisKelamin','jenis_kelamin','Jenis Kelamin','gender','kelamin','JenisKelamin'),
+    pip:          pick('pip','PIP','pip_status','statusPip','Status PIP','hasPip'),
+    namaSekolah:  pick('namaSekolah','nama_sekolah','Nama Sekolah','sekolah','asalSekolah','asal_sekolah','schoolName','namaSekolahAsal'),
+    jenisSekolah: pick('jenisSekolah','jenis_sekolah','Jenis Sekolah','tipeSekolah','statusSekolah'),
+    pilihan1:     pick('pilihan1','pilihan_1','Pilihan 1','jurusan1','jurusanPilihan1','pilihan_jurusan_1','jurusan','Jurusan','Pilihan Jurusan 1','pilihanJurusan'),
+    pilihan2:     pick('pilihan2','pilihan_2','Pilihan 2','jurusan2','jurusanPilihan2','pilihan_jurusan_2','Pilihan Jurusan 2'),
+    kecamatanSekolah: pick('kecamatanSekolah','kecamatan_sekolah','kecamatan','Kecamatan','Kecamatan Sekolah','kecamatanAsal'),
+    kabupatenSekolah: pick('kabupatenSekolah','kabupaten_sekolah','kabupaten','Kabupaten','Kabupaten/Kota','kabupatenAsal','kotaKabupaten'),
+  };
+}
+
 /* ── RENDER DATA ── */
 function renderData(d,source){
   /* ----- Hitung statistik dari data mentah jika tersedia ----- */
   let total=0,laki=0,perempuan=0,pip=0,negeri=0,swasta=0,asalSekolahSet=new Set();
   const jurusanCount={},kecCount={},kabCount={};
 
-  /* Coba parse rows mentah dari Apps Script SPMB */
-  const rows=d.rows||d.data||d.pendaftar||[];
+  /* Coba parse rows mentah dari Apps Script SPMB
+     Terima berbagai nama wrapper yang mungkin dikirim Apps Script */
+  const rawRows=d.rows||d.data||d.pendaftar||d.items||d.results||d.list||d.records||[];
+  /* Normalisasi setiap row agar nama field konsisten */
+  const rows=Array.isArray(rawRows)?rawRows.map(normRow):[];
   if(rows.length>0){
     rows.forEach(r=>{
       total++;
-      const jk=(r.jenisKelamin||r.jenis_kelamin||'').toLowerCase();
+      const jk=(r.jenisKelamin||'').toLowerCase();
       if(jk==='perempuan')perempuan++;else laki++;
-      if((r.pip||'').toLowerCase()==='ya'||(r.pip||'')==='1')pip++;
-      const sek=(r.namaSekolah||r.nama_sekolah||'').trim();
+      /* Terima 'ya','yes','1',true,1 sebagai penerima PIP */
+      const pipVal=String(r.pip||'').toLowerCase().trim();
+      if(pipVal==='ya'||pipVal==='yes'||pipVal==='1'||pipVal==='true')pip++;
+      const sek=(r.namaSekolah||'').trim();
       if(sek){
         asalSekolahSet.add(sek.toLowerCase());
         /* Baca field jenisSekolah langsung dari form (Negeri / Swasta) */
         const jenisSekolah=(r.jenisSekolah||'').toLowerCase().trim();
         if(jenisSekolah.indexOf('negeri')!==-1)negeri++;
         else if(jenisSekolah.indexOf('swasta')!==-1)swasta++;
+        /* Fallback: tebak dari nama sekolah jika jenisSekolah kosong */
+        else if(!jenisSekolah){const sn=sek.toLowerCase();if(sn.includes('negeri')||sn.includes('smpn')||sn.includes('mtsn'))negeri++;else swasta++;}
       }
-      const j1=normJurusan(r.pilihan1||r.jurusan||'');
+      const j1=normJurusan(r.pilihan1||'');
       if(j1&&j1!=='Lainnya')jurusanCount[j1]=(jurusanCount[j1]||0)+1;
-      const kec=(r.kecamatanSekolah||r.kecamatan_sekolah||r.kecamatan||'').trim();
+      const kec=(r.kecamatanSekolah||'').trim();
       if(kec){const norm=kec.charAt(0).toUpperCase()+kec.slice(1).toLowerCase();kecCount[norm]=(kecCount[norm]||0)+1;}
-      const kab=(r.kabupatenSekolah||r.kabupaten_sekolah||r.kabupaten||'').trim();
+      const kab=(r.kabupatenSekolah||'').trim();
       if(kab){const norm=kab.charAt(0).toUpperCase()+kab.slice(1).toLowerCase();kabCount[norm]=(kabCount[norm]||0)+1;}
     });
   } else {
@@ -1193,7 +1272,7 @@ function renderData(d,source){
   if(total>0)updatePIP(pip,total);
   updateWilayah(kecCount,kabCount);
 
-  /* Pendaftar grid */
+  /* Pendaftar grid — gunakan rows yang sudah ternormalisasi */
   if(rows.length>0){
     _allPendaftar=rows;
     _pendaftarPage=0;
@@ -1225,7 +1304,7 @@ function loadFallbackData(){
   setBigNum('pip',89);
   setBigNum('asal-sekolah',32);
   updateBarChart({
-    'Teknik Kendaraan Ringan':62,'Teknik Jaringan Komputer':48,'Bisnis Digital':38,
+    'Teknik Kendaraan Ringan':62,'Teknik Komputer & Jaringan':48,'Bisnis Digital':38,
     'Akuntansi Keuangan Lembaga':34,'Desain Komunikasi Visual':28,
     'Manajemen Perkantoran':22,'Teknik Sepeda Motor':15,
   });
@@ -1234,10 +1313,20 @@ function loadFallbackData(){
     {'Garut Kota':68,'Tarogong Kidul':42,'Banyuresmi':28,'Cilawu':22,'Karangtengah':18,'Wanaraja':16,'Samarang':15,'Bayongbong':14,'Karangpawitan':12,'Tarogong Kaler':12},
     {'Garut':236,'Tasikmalaya':5,'Bandung':4,'Ciamis':2}
   );
-  /* Grid pendaftar dikosongkan — data individual tidak tersedia dari API */
+  /* Grid pendaftar — saat fallback, tampilkan pesan informatif
+     daripada kosong sama sekali (tidak mengganggu logika lain) */
   _allPendaftar=[];
   _pendaftarPage=0;
-  renderPendaftarPage();
+  const _fbGrid=document.getElementById('pendaftar-grid');
+  const _fbNav=document.getElementById('pendaftar-nav');
+  if(_fbGrid)_fbGrid.innerHTML='<div class="stories-empty" style="grid-column:1/-1">'+
+    '📡 <strong>Data individual pendaftar tidak tersedia saat ini.</strong><br>'+
+    '<span style="font-size:12px;color:var(--text-muted);margin-top:6px;display:block">'+
+    'Statistik ringkasan di atas ditampilkan sebagai estimasi.<br>'+
+    'Tekan <strong style="color:var(--blue-mid)">🔄 Perbarui Data</strong> untuk mencoba koneksi ke server.</span></div>';
+  if(_fbNav)_fbNav.style.display='none';
+  const _fbCnt=document.getElementById('pendaftar-count');
+  if(_fbCnt)_fbCnt.textContent='Data sedang dimuat dari server...';
   const ts=document.getElementById('data-timestamp');
   const badge=document.getElementById('data-status-badge');
   if(ts)ts.textContent='Menampilkan data estimasi (koneksi ke server gagal)';
@@ -1269,9 +1358,14 @@ async function loadData(forceRefresh=false){
   /* Kirim action=getInfografis agar Apps Script bisa merespons khusus */
   const url=APPS_SCRIPT_URL+'?action=getInfografis'+(forceRefresh?'&t='+Date.now():'');
   try{
-    const res=await fetch(url,{signal:ctrl.signal,cache:'no-store'});
+    /* follow:manual agar Apps Script redirect ditangani dengan benar */
+    const res=await fetch(url,{signal:ctrl.signal,cache:'no-store',redirect:'follow'});
     if(!res.ok)throw new Error('HTTP '+res.status);
-    const d=await res.json();
+    const text=await res.text();
+    /* Bersihkan kemungkinan karakter BOM atau whitespace dari Apps Script */
+    const cleaned=text.replace(/^\uFEFF/,'').trim();
+    let d;
+    try{d=JSON.parse(cleaned);}catch(pe){throw new Error('JSON parse error: '+pe.message);}
     if(d.error)throw new Error(d.error);
     saveCache(d);
     renderData(d,'live');
