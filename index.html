@@ -1351,36 +1351,26 @@ async function loadData(forceRefresh=false){
     loadFallbackData();
   }
 
-  /* 2) Fetch live — dua request paralel:
-        - getInfografis : statistik agregat (hero counter, chart, wilayah)
-        - getRows       : data individual untuk grid pendaftar             */
+  /* 2) Fetch live */
   const ctrl=new AbortController();
   _ctrl=ctrl;
   const timeoutId=setTimeout(()=>{try{ctrl.abort();}catch(_){}},15000);
-  const ts='&t='+Date.now();
-  const urlStats =APPS_SCRIPT_URL+'?action=getInfografis'+ts;
-  const urlRows  =APPS_SCRIPT_URL+'?action=getRows'+ts;
-
-  async function fetchJson(url){
+  /* no-cors tidak bisa baca response — gunakan cors biasa, Apps Script sudah support */
+  const url=APPS_SCRIPT_URL+'?action=getInfografis&t='+Date.now();
+  try{
     const res=await fetch(url,{signal:ctrl.signal,cache:'no-store'});
     if(!res.ok)throw new Error('HTTP '+res.status);
     const text=await res.text();
+    /* Bersihkan kemungkinan karakter BOM atau whitespace dari Apps Script */
     const cleaned=text.replace(/^\uFEFF/,'').trim();
-    const d=JSON.parse(cleaned);
-    if(d.error||d.status==='error')throw new Error(d.message||d.error||'Server error');
-    return d;
-  }
-
-  try{
-    /* Jalankan dua fetch paralel */
-    const [dStats,dRows]=await Promise.all([fetchJson(urlStats),fetchJson(urlRows)]);
-
-    /* Gabungkan: statistik dari dStats, rows dari dRows */
-    const merged=Object.assign({},dStats,{rows:dRows.rows||[]});
-    saveCache(merged);
-    renderData(merged,'live');
+    let d;
+    try{d=JSON.parse(cleaned);}catch(pe){throw new Error('JSON parse error: '+pe.message);}
+    if(d.error)throw new Error(d.error);
+    saveCache(d);
+    renderData(d,'live');
     if(forceRefresh)showToast('Data berhasil diperbarui! ✅',false);
   }catch(e){
+    /* Hanya tampilkan fallback jika belum ada data apapun di layar */
     const gridHasRealData=_allPendaftar.length>0;
     if(e&&e.name==='AbortError'){
       if(!cached&&!gridHasRealData)loadFallbackData();
