@@ -5,12 +5,6 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>Infografis Pendaftar SPMB — SMKS Ciledug Al Musaddadiyah 2026/2027</title>
 <meta name="description" content="Visualisasi data pendaftar SPMB SMKS Ciledug Al Musaddadiyah Garut 2026/2027 — real-time, interaktif."/>
-<link rel="canonical" href="https://www.smkciledugalmusaddadiyah.sch.id"/>
-<meta property="og:type" content="website"/>
-<meta property="og:title" content="Infografis Pendaftar SPMB — SMKS Ciledug Al Musaddadiyah 2026/2027"/>
-<meta property="og:description" content="Visualisasi data pendaftar SPMB SMKS Ciledug Al Musaddadiyah Garut 2026/2027 — real-time, interaktif."/>
-<meta property="og:url" content="https://www.smkciledugalmusaddadiyah.sch.id"/>
-<meta name="theme-color" content="#0b3d91"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,700;0,800;0,900;1,900&family=DM+Sans:wght@400;600&display=swap"/>
@@ -24,8 +18,6 @@
   --gold:#ffb300;--gold-light:#ffd54f;
   --green:#1e8c4e;--green-light:#e8f5e9;
   --red:#e53935;--red-light:#fce4ec;
-  --orange:#e65100;--orange-light:#fff8e1;
-  --pink:#ad1457;--pink-light:#fce4ec;
   --shadow:0 4px 24px rgba(21,101,192,.12);--shadow-lg:0 12px 48px rgba(21,101,192,.18);
   --radius:16px;--radius-sm:10px;
   --transition:.2s cubic-bezier(.4,0,.2,1);
@@ -211,14 +203,16 @@ img,svg{display:block}
 .bar-row{display:flex;align-items:center;gap:10px}
 .bar-label{font-size:10.5px;color:var(--text-mid);width:86px;flex-shrink:0;text-align:right;line-height:1.3}
 .bar-track{flex:1;height:28px;background:var(--blue-pale);border-radius:7px;overflow:hidden}
-.bar-fill{height:100%;border-radius:7px;display:flex;align-items:center;padding-left:8px;font-size:10.5px;font-weight:700;color:#fff;transition:width 1s cubic-bezier(.22,1,.36,1);will-change:width}
-.bar-pct{font-size:10.5px;color:var(--text-muted);width:34px;text-align:right;flex-shrink:0}
+.bar-fill{height:100%;border-radius:7px;display:flex;align-items:center;padding-left:8px;font-size:10.5px;font-weight:700;color:#fff;transition:width 1s cubic-bezier(.22,1,.36,1)}
+.bar-pct{font-size:10.5px;color:var(--text-muted);width:26px;text-align:right;flex-shrink:0}
 
-.pip-bar-pct{font-size:10.5px;font-weight:700;color:var(--text-muted);width:30px;text-align:right;flex-shrink:0}
+.donut-wrap{display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+.donut-legend{display:flex;flex-direction:column;gap:9px;flex:1}
+.legend-item{display:flex;align-items:center;gap:9px;font-size:12.5px;color:var(--text-mid)}
+.legend-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.legend-pct{font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;color:var(--text-dark);margin-left:auto}
 
 /* ── WILAYAH CARD ── */
-.map-card-header .section-label{margin-bottom:5px}
-.map-card-header .section-title{font-size:19px}
 .map-card{background:var(--cream);border-radius:var(--radius);padding:24px;border:1px solid rgba(30,136,229,.1)}
 .map-card-header{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:20px}
 .wilayah-tables-wrap{display:grid;grid-template-columns:1fr 1fr;gap:20px}
@@ -281,13 +275,12 @@ img,svg{display:block}
 .pip-label-green{color:var(--green)}
 .pip-label-gray{color:#78909c}
 .pip-bar-track{flex:1;height:26px;background:#f0f4f8;border-radius:6px;overflow:hidden}
-.pip-bar-fill{height:100%;border-radius:6px;display:flex;align-items:center;padding-left:8px;font-size:10.5px;font-weight:700;color:#fff;transition:width 1s cubic-bezier(.22,1,.36,1);min-width:0;will-change:width}
+.pip-bar-fill{height:100%;border-radius:6px;display:flex;align-items:center;padding-left:8px;font-size:10.5px;font-weight:700;color:#fff;transition:width 1s cubic-bezier(.22,1,.36,1);min-width:0}
 .pip-fill-green{background:linear-gradient(90deg,var(--green),#4caf50)}
 .pip-fill-gray{background:linear-gradient(90deg,#78909c,#b0bec5)}
 .pip-bar-pct{font-size:10.5px;font-weight:700;color:var(--text-muted);width:30px;text-align:right;flex-shrink:0}
 .pip-bar-val{font-size:10px;font-weight:700;white-space:nowrap}
 .pip-donut-row{display:flex;align-items:center;gap:14px;padding-top:4px}
-.pip-donut-arc-anim{transition:stroke-dasharray 1.1s cubic-bezier(.22,1,.36,1)}
 .pip-legend-stack{display:flex;flex-direction:column;gap:8px;flex:1}
 .pip-legend-item{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--text-mid)}
 .pip-legend-item b{margin-left:auto;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;color:var(--text-dark);font-size:13px}
@@ -403,34 +396,13 @@ img,svg{display:block}
 #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
 /* ── ANIMATIONS ── */
-.reveal{opacity:0;transform:translateY(22px);transition:opacity .65s cubic-bezier(.22,1,.36,1),transform .65s cubic-bezier(.22,1,.36,1);will-change:opacity,transform}
-.reveal.visible{opacity:1;transform:none;will-change:auto}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .65s cubic-bezier(.22,1,.36,1),transform .65s cubic-bezier(.22,1,.36,1)}
+.reveal.visible{opacity:1;transform:none}
 .counter-num{display:inline-block;min-width:3ch}
 @keyframes slideAnimOut{to{opacity:0;transform:translateX(-22px)}}
+@keyframes slideAnimIn{from{opacity:0;transform:translateX(22px)}to{opacity:1;transform:none}}
 .pendaftar-grid.animating{animation:slideAnimOut .23s ease both}
-
-/* ── KPI CARD COLOR UTILITIES ── */
-.kpi-laki{color:var(--blue-deep)}
-.kpi-laki-bg{background:#e3f2fd}
-.kpi-perempuan{color:var(--pink)}
-.kpi-perempuan-bg{background:var(--pink-light)}
-.kpi-pip{color:var(--green)}
-.kpi-pip-bg{background:var(--green-light)}
-.kpi-sekolah{color:var(--orange)}
-.kpi-sekolah-bg{background:var(--orange-light)}
-.kpi-sub-laki{color:var(--blue-bright);font-weight:600}
-.kpi-sub-perempuan{color:var(--pink);font-weight:600}
-.kpi-sub-pip{color:var(--green);font-weight:600}
-.kpi-sub-sekolah{color:var(--orange);font-weight:600}
-
-/* ── UTILITY ── */
-.ts-label{font-weight:600;color:var(--blue-mid)}
-.count-label{color:var(--blue-mid);font-weight:700}
-.wilayah-badge-inline{font-size:11.5px;color:var(--text-muted);background:var(--blue-pale);padding:5px 13px;border-radius:50px;font-weight:600}
-.badge-kab-style{background:var(--orange-light);color:var(--orange)}
-.footer-title{color:rgba(255,255,255,.55);font-size:13px;margin-bottom:10px;font-weight:700}
-.footer-links{margin-top:8px}
-.footer-copy{margin-top:12px}
 
 /* ── RESPONSIVE ── */
 @media(max-width:1024px){
@@ -478,21 +450,21 @@ img,svg{display:block}
         <span>SMKS Ciledug Al Musaddadiyah</span>
       </div>
     </a>
-    <div class="nav-links" aria-label="Menu utama">
+    <div class="nav-links" role="navigation" aria-label="Menu utama">
       <a class="nav-link active" href="#beranda">📊 Dashboard</a>
       <a class="nav-link" href="#infografis">📈 Infografis</a>
       <a class="nav-link" href="#pendaftar-list">👥 Pendaftar</a>
     </div>
     <div class="nav-right">
-      <a class="btn-gold" href="index.html">
-        📝 Daftar SPMB
+      <a class="btn-gold" href="https://www.smkciledugalmusaddadiyah.sch.id" target="_blank" rel="noopener">
+        🏫 Website Sekolah
       </a>
     </div>
   </div>
 </nav>
 
 <!-- MOBILE BOTTOM NAV -->
-<nav class="mobile-nav-bar" aria-label="Menu mobile">
+<div class="mobile-nav-bar" role="navigation" aria-label="Menu mobile">
   <div class="mobile-nav-inner">
     <a class="mobile-nav-btn active" href="#beranda">
       <div class="mn-icon">📊</div>
@@ -506,12 +478,8 @@ img,svg{display:block}
       <div class="mn-icon">👥</div>
       <div class="mn-label">Pendaftar</div>
     </a>
-    <a class="mobile-nav-btn" href="index.html">
-      <div class="mn-icon">📝</div>
-      <div class="mn-label">Daftar</div>
-    </a>
   </div>
-</nav>
+</div>
 
 <!-- ══ HERO ══ -->
 <header id="beranda">
@@ -567,12 +535,12 @@ img,svg{display:block}
 </header>
 
 <!-- ══ INFOGRAFIS ══ -->
-<section id="infografis" class="section">
+<section id="infografis" class="section" style="background:#fff">
   <div class="container">
     <div class="section-header">
       <div class="section-label">Data Pendaftar SPMB</div>
       <h2 class="section-title">Infografis <em>Pendaftar SMKS Ciledug Al Musaddadiyah</em></h2>
-      <p class="section-sub">Visualisasi data pendaftar SPMB 2026/2027 real-time dari Database SMK Ciledug Al Musaddadiyah. <span id="data-timestamp" class="ts-label">Memuat data...</span></p>
+      <p class="section-sub">Visualisasi data pendaftar SPMB 2026/2027 real-time dari Google Sheets. <span id="data-timestamp" style="font-weight:600;color:var(--blue-mid)">Memuat data...</span></p>
       <div id="data-status-badge" class="data-status" style="display:none" role="status" aria-live="polite"></div>
       <button class="refresh-btn" onclick="loadData(true)" id="refresh-btn" aria-label="Perbarui data">
         <span class="refresh-icon" id="refresh-icon">🔄</span> Perbarui Data
@@ -582,24 +550,24 @@ img,svg{display:block}
     <!-- 4 KPI CARDS -->
     <div class="infographic-grid reveal">
       <article class="info-card">
-        <div class="icon-wrap kpi-laki-bg">👦</div>
-        <div class="big-num kpi-laki" data-id="laki"><span class="skeleton" aria-hidden="true"></span></div>
-        <div class="card-lbl">Pendaftar Laki-laki<br><span class="kpi-sub-laki">Calon Peserta Didik Baru</span></div>
+        <div class="icon-wrap" style="background:#e3f2fd">👦</div>
+        <div class="big-num" style="color:var(--blue-deep)" data-id="laki"><span class="skeleton" aria-hidden="true"></span></div>
+        <div class="card-lbl">Pendaftar Laki-laki<br><span style="color:var(--blue-bright);font-weight:600">Calon Peserta Didik Baru</span></div>
       </article>
       <article class="info-card">
-        <div class="icon-wrap kpi-perempuan-bg">👧</div>
-        <div class="big-num kpi-perempuan" data-id="perempuan"><span class="skeleton" aria-hidden="true"></span></div>
-        <div class="card-lbl">Pendaftar Perempuan<br><span class="kpi-sub-perempuan">Calon Peserta Didik Baru</span></div>
+        <div class="icon-wrap" style="background:#fce4ec">👧</div>
+        <div class="big-num" style="color:#ad1457" data-id="perempuan"><span class="skeleton" aria-hidden="true"></span></div>
+        <div class="card-lbl">Pendaftar Perempuan<br><span style="color:#ad1457;font-weight:600">Calon Peserta Didik Baru</span></div>
       </article>
       <article class="info-card">
-        <div class="icon-wrap kpi-pip-bg">✅</div>
-        <div class="big-num kpi-pip" data-id="pip"><span class="skeleton" aria-hidden="true"></span></div>
-        <div class="card-lbl">Penerima PIP<br><span class="kpi-sub-pip">Program Indonesia Pintar</span></div>
+        <div class="icon-wrap" style="background:#e8f5e9">✅</div>
+        <div class="big-num" style="color:var(--green)" data-id="pip"><span class="skeleton" aria-hidden="true"></span></div>
+        <div class="card-lbl">Penerima PIP<br><span style="color:var(--green);font-weight:600">Program Indonesia Pintar</span></div>
       </article>
       <article class="info-card">
-        <div class="icon-wrap kpi-sekolah-bg">🏫</div>
-        <div class="big-num kpi-sekolah" data-id="asal-sekolah"><span class="skeleton" aria-hidden="true"></span></div>
-        <div class="card-lbl">Asal Sekolah<br><span class="kpi-sub-sekolah">SMP/MTs Berbeda</span></div>
+        <div class="icon-wrap" style="background:#fff8e1">🏫</div>
+        <div class="big-num" style="color:#e65100" data-id="asal-sekolah"><span class="skeleton" aria-hidden="true"></span></div>
+        <div class="card-lbl">Asal Sekolah<br><span style="color:#e65100;font-weight:600">SMP/MTs Berbeda</span></div>
       </article>
     </div>
 
@@ -644,7 +612,7 @@ img,svg{display:block}
               <circle cx="44" cy="44" r="34" fill="none" stroke="#e8f5e9" stroke-width="16"/>
               <circle id="pip-donut-arc" cx="44" cy="44" r="34" fill="none" stroke="var(--green)" stroke-width="16"
                 stroke-dasharray="0 213.63" stroke-dashoffset="0" transform="rotate(-90 44 44)"
-                class="pip-donut-arc-anim"/>
+                style="transition:stroke-dasharray 1.1s cubic-bezier(.22,1,.36,1)"/>
               <text id="pip-donut-center" x="44" y="49" text-anchor="middle"
                 font-family="Plus Jakarta Sans,sans-serif" font-size="13" font-weight="900" fill="var(--green)">–</text>
             </svg>
@@ -661,10 +629,10 @@ img,svg{display:block}
     <div class="map-card reveal" id="wilayah-card">
       <div class="map-card-header">
         <div>
-          <div class="section-label">Sebaran Asal Sekolah</div>
-          <h3 class="section-title">Pendaftar dari <em>Berbagai Kecamatan</em></h3>
+          <div class="section-label" style="margin-bottom:5px">Sebaran Asal Sekolah</div>
+          <h3 class="section-title" style="font-size:19px">Pendaftar dari <em>Berbagai Kecamatan</em></h3>
         </div>
-        <span id="wilayah-badge" class="wilayah-badge-inline">🗺️ Memuat...</span>
+        <span id="wilayah-badge" style="font-size:11.5px;color:var(--text-muted);background:var(--blue-pale);padding:5px 13px;border-radius:50px;font-weight:600">🗺️ Memuat...</span>
       </div>
       <div class="wilayah-tables-wrap">
         <!-- Tabel Kecamatan Asal Sekolah -->
@@ -681,7 +649,7 @@ img,svg{display:block}
         <div class="wilayah-table-section">
           <div class="wilayah-table-title">
             <span class="wtitle-icon">🗺️</span> Kabupaten/Kota Asal
-            <span class="wtitle-badge badge-kab-style" id="badge-kab">–</span>
+            <span class="wtitle-badge" id="badge-kab" style="background:#fff8e1;color:#e65100">–</span>
           </div>
           <div id="tabel-kabupaten">
             <div class="wilayah-empty">⏳ Memuat data kabupaten...</div>
@@ -729,7 +697,7 @@ img,svg{display:block}
       <div class="tl-item">
         <div class="tl-dot"></div>
         <div class="tl-card">
-          <div class="tl-year">13 – 20 Jul 2026</div>
+          <div class="tl-year">14 – 18 Jul 2026</div>
           <div class="tl-title">📝 Daftar Ulang</div>
           <div class="tl-desc">Peserta yang dinyatakan diterima melakukan daftar ulang dan melengkapi berkas administrasi di sekolah.</div>
         </div>
@@ -737,7 +705,7 @@ img,svg{display:block}
       <div class="tl-item">
         <div class="tl-dot"></div>
         <div class="tl-card">
-          <div class="tl-year">21 Jul 2026</div>
+          <div class="tl-year">14 Jul 2026</div>
           <div class="tl-title">🎓 Tahun Pelajaran Baru Dimulai</div>
           <div class="tl-desc">Peserta didik baru resmi bergabung bersama keluarga besar SMKS Ciledug Al Musaddadiyah Garut Tahun Pelajaran 2026/2027.</div>
         </div>
@@ -752,7 +720,7 @@ img,svg{display:block}
     <div class="section-header">
       <div class="section-label">Data Pendaftar</div>
       <h2 class="section-title">Calon Peserta Didik <em>Baru 2026/2027</em></h2>
-      <p class="section-sub">Data ringkasan pendaftar SPMB yang telah mengisi formulir online. <span id="pendaftar-count" class="count-label">Memuat...</span></p>
+      <p class="section-sub">Data ringkasan pendaftar SPMB yang telah mengisi formulir online. <span id="pendaftar-count" style="color:var(--blue-mid);font-weight:700">Memuat...</span></p>
     </div>
     <div id="pendaftar-grid" class="pendaftar-grid">
       <!-- diisi JS -->
@@ -775,10 +743,10 @@ img,svg{display:block}
       <h2>Bergabunglah bersama<br><em>SMKS Ciledug Al Musaddadiyah</em></h2>
       <p>Pendaftaran SPMB Online 2026/2027 masih dibuka. Pilih jurusanmu dan wujudkan masa depan bersama kami.</p>
       <div class="cta-btns">
-        <a class="btn-gold" href="index.html">
+        <a class="btn-gold" href="https://www.smkciledugalmusaddadiyah.sch.id/p/ppdb-online-smk-ciledug-al-musaddadiyah.html" target="_blank" rel="noopener">
           📋 Daftar Online Sekarang
         </a>
-        <a class="btn-ghost" href="https://wa.me/62262489218" target="_blank" rel="noopener">
+        <a class="btn-ghost" href="https://wa.me/+62262489218" target="_blank" rel="noopener">
           📞 Hubungi Panitia
         </a>
       </div>
@@ -788,14 +756,13 @@ img,svg{display:block}
 
 <!-- FOOTER -->
 <footer id="spmb-footer">
-  <p class="footer-title">SMKS Ciledug Al Musaddadiyah Garut</p>
-  <p>📍 Jl. Mayor Syamsu No. 02 Garut 44151 · 📞 <a href="tel:+622624892181">(0262) 4892181</a></p>
-  <p class="footer-links">
+  <p style="color:rgba(255,255,255,.55);font-size:13px;margin-bottom:10px;font-weight:700">SMKS Ciledug Al Musaddadiyah Garut</p>
+  <p>📍 Jl. Mayor Syamsu No. 02 Garut 44151 · 📞 <a href="tel:+62262489218">(0262) 489218</a></p>
+  <p style="margin-top:8px">
     <a href="https://www.smkciledugalmusaddadiyah.sch.id" target="_blank" rel="noopener">Website Sekolah</a> ·
-    <a href="index.html">📝 Form Pendaftaran</a> ·
     <a href="https://www.instagram.com/smkscalm_official/" target="_blank" rel="noopener">Instagram</a>
   </p>
-  <p class="footer-copy">© 2026 SMKS Ciledug Al Musaddadiyah · Infografis SPMB 2026/2027</p>
+  <p style="margin-top:12px">© 2026 SMKS Ciledug Al Musaddadiyah · Infografis SPMB 2026/2027</p>
 </footer>
 
 <!-- TOAST -->
@@ -803,51 +770,8 @@ img,svg{display:block}
 
 <script>
 /* ── CONFIG ── */
-/* URL Apps Script SPMB — endpoint yang sama dengan form SPMB */
+/* URL Apps Script SPMB — ambil dari endpoint yang sama dengan form SPMB */
 const APPS_SCRIPT_URL='https://script.google.com/macros/s/AKfycbzJuZDxkC-mGEWzwplPTU5Y8ucW9BZGp2ZEhRiFFQGPSiYQ8NpEC1TA5KmQzgaYAIqw/exec';
-
-/* ══════════════════════════════════════════════════════════════════
-   PANDUAN APPS SCRIPT — tambahkan fungsi ini di Apps Script SPMB
-   agar endpoint ?action=getInfografis mengembalikan data pendaftar.
-
-   Di Apps Script (script.google.com), tambahkan ke doGet(e):
-
-   function doGet(e) {
-     var action = e && e.parameter && e.parameter.action;
-     if (action === 'getInfografis') {
-       return getInfografisResponse();
-     }
-     // ... sisa kode doGet yang sudah ada (jangan diubah)
-   }
-
-   function getInfografisResponse() {
-     try {
-       var ss = SpreadsheetApp.getActiveSpreadsheet();
-       var sheet = ss.getSheetByName('Pendaftar') || ss.getSheets()[0];
-       var data = sheet.getDataRange().getValues();
-       var headers = data[0].map(function(h){ return String(h).trim(); });
-       var rows = [];
-       for (var i = 1; i < data.length; i++) {
-         if (!data[i][0]) continue; // skip baris kosong
-         var row = {};
-         headers.forEach(function(h, idx) { row[h] = data[i][idx]; });
-         rows.push(row);
-       }
-       var out = { rows: rows, lastUpdated: new Date().toLocaleString('id-ID') };
-       return ContentService
-         .createTextOutput(JSON.stringify(out))
-         .setMimeType(ContentService.MimeType.JSON);
-     } catch(err) {
-       return ContentService
-         .createTextOutput(JSON.stringify({ error: err.message }))
-         .setMimeType(ContentService.MimeType.JSON);
-     }
-   }
-
-   Nama sheet bisa disesuaikan ('Pendaftar', 'Form Responses 1', dll).
-   Kolom di Sheet harus memiliki header di baris pertama.
-   Nama header Sheet akan otomatis dipetakan ke field yang benar.
-   ══════════════════════════════════════════════════════════════════ */
 
 /* ── JURUSAN MAP (normalisasi) ── */
 const JURUSAN_MAP={
@@ -855,7 +779,7 @@ const JURUSAN_MAP={
   'bisnis digital':'Bisnis Digital','bd':'Bisnis Digital','bisnis daring dan pemasaran':'Bisnis Digital','bdp':'Bisnis Digital','pemasaran':'Bisnis Digital',
   'manajemen perkantoran':'Manajemen Perkantoran','mp':'Manajemen Perkantoran','otomatisasi tata kelola perkantoran':'Manajemen Perkantoran','otkp':'Manajemen Perkantoran','administrasi perkantoran':'Manajemen Perkantoran',
   'desain komunikasi visual':'Desain Komunikasi Visual','dkv':'Desain Komunikasi Visual','multimedia':'Desain Komunikasi Visual',
-  'teknik jaringan komputer':'Teknik Komputer & Jaringan','tjk':'Teknik Komputer & Jaringan','teknik komputer dan jaringan':'Teknik Komputer & Jaringan','tkj':'Teknik Komputer & Jaringan','teknik komputer & jaringan':'Teknik Komputer & Jaringan',
+  'teknik jaringan komputer':'Teknik Jaringan Komputer','tjk':'Teknik Jaringan Komputer','teknik komputer dan jaringan':'Teknik Jaringan Komputer','tkj':'Teknik Jaringan Komputer',
   'teknik kendaraan ringan':'Teknik Kendaraan Ringan','tkr':'Teknik Kendaraan Ringan',
   'teknik sepeda motor':'Teknik Sepeda Motor','tsm':'Teknik Sepeda Motor',
 };
@@ -893,16 +817,15 @@ function animateCounter(el,target,suffix){
   const t=target!==undefined?target:parseInt(el.dataset.target,10);
   const s=suffix!==undefined?suffix:(el.dataset.suffix||'');
   if(isNaN(t))return;
-  if(el._rafId){cancelAnimationFrame(el._rafId);el._rafId=null;}
   const dur=1500;
   const start=performance.now();
   function step(now){
     const p=Math.min((now-start)/dur,1);
     const ease=1-Math.pow(1-p,4);
     el.textContent=Math.round(t*ease)+s;
-    if(p<1){el._rafId=requestAnimationFrame(step);}else{el._rafId=null;}
+    if(p<1)requestAnimationFrame(step);
   }
-  el._rafId=requestAnimationFrame(step);
+  requestAnimationFrame(step);
 }
 
 function setHeroCounter(id,value,suffix){
@@ -950,7 +873,6 @@ window.addEventListener('scroll',()=>{
 /* ── TOAST ── */
 function showToast(msg,isErr=true){
   const t=document.getElementById('toast');
-  if(!t)return;
   t.textContent=msg;
   t.style.background=isErr?'#e53935':'var(--green)';
   t.classList.add('show');
@@ -958,7 +880,7 @@ function showToast(msg,isErr=true){
 }
 
 /* ── HTML ESCAPE ── */
-function esc(str){if(!str)return'';return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#x27;');}
+function esc(str){if(!str)return'';return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 
 /* ── BAR CHART JURUSAN ── */
 function updateBarChart(jurusanData){
@@ -970,7 +892,7 @@ function updateBarChart(jurusanData){
   container.innerHTML=sorted.slice(0,8).map(([nama,jumlah],i)=>{
     const pct=Math.round((jumlah/max)*100);
     const shortName=nama.length>14?nama.substring(0,14)+'…':nama;
-    return`<div class="bar-row"><div class="bar-label" title="${esc(nama)}">${esc(shortName)}</div><div class="bar-track"><div class="bar-fill" style="width:0%;background:${colors[i%colors.length]}" data-pct="${pct}">${parseInt(jumlah)||0}</div></div><div class="bar-pct">${pct}%</div></div>`;
+    return`<div class="bar-row"><div class="bar-label" title="${esc(nama)}">${esc(shortName)}</div><div class="bar-track"><div class="bar-fill" style="width:0%;background:${colors[i%colors.length]}" data-pct="${pct}">${parseInt(jumlah)||0}</div></div><div class="bar-pct">${parseInt(jumlah)||0}</div></div>`;
   }).join('');
   requestAnimationFrame(()=>{
     container.querySelectorAll('.bar-fill').forEach(bar=>{bar.style.width=bar.dataset.pct+'%';});
@@ -1102,12 +1024,12 @@ function renderPendaftarPage(){
     const asalSek=p.namaSekolah||p.asalSekolah||'–';
     const kec=p.kecamatanSekolah||p.kecamatan||'–';
     const pipStatus=((p.pip||'').toLowerCase()==='ya'||p.pip==='1'||p.pip===true)?'✅ PIP':'';
-    const nama=esc(p.namaLengkap||p.nama||'Anonim');
+    const nama=p.namaLengkap||p.nama||'Anonim';
     return`<article class="pendaftar-card">
       <div class="pd-header" style="background:${grad}">
         <div class="pd-avatar" style="background:rgba(255,255,255,.15)">${esc(initial)}</div>
         <div>
-          <div class="pd-name">${nama}</div>
+          <div class="pd-name">${esc(nama)}</div>
           <div class="pd-sub">${jkEmoji} ${jkLabel}${pipStatus?' · '+pipStatus:''}</div>
         </div>
       </div>
@@ -1139,21 +1061,17 @@ function renderPendaftarPage(){
   if(cnt)cnt.textContent=`${_allPendaftar.length} pendaftar terdaftar`;
 }
 
-let _pendaftarAnimating=false;
 function pendaftarPage(dir){
-  if(_pendaftarAnimating)return;
   const totalPages=Math.ceil(_allPendaftar.length/PER_PAGE);
   const newPage=_pendaftarPage+dir;
   if(newPage<0||newPage>=totalPages)return;
   const grid=document.getElementById('pendaftar-grid');
   if(grid){
-    _pendaftarAnimating=true;
     grid.classList.add('animating');
     setTimeout(()=>{
       _pendaftarPage=newPage;
       renderPendaftarPage();
       grid.classList.remove('animating');
-      _pendaftarAnimating=false;
     },230);
   }else{_pendaftarPage=newPage;renderPendaftarPage();}
 }
@@ -1177,64 +1095,33 @@ function loadCache(){
 }
 function clearCache(){_memCache=null;}
 
-/* ── NORMALISASI FIELD ROW ── */
-/* Fungsi ini memetakan berbagai variasi nama kolom Google Sheet
-   ke nama field standar yang dipakai renderData & renderPendaftarPage.
-   Tidak mengubah logika apapun — hanya menambah alias field. */
-function normRow(r){
-  if(!r||typeof r!=='object')return r;
-  /* Helper ambil nilai dari banyak kemungkinan nama kunci */
-  function pick(){for(let i=0;i<arguments.length;i++){const v=r[arguments[i]];if(v!==undefined&&v!==null&&v!=='')return v;}return'';}
-  return {
-    /* Pertahankan semua field asli dulu */
-    ...r,
-    /* Tambahkan/perkuat alias field yang paling sering beda nama */
-    namaLengkap: pick('namaLengkap','nama_lengkap','nama','Nama Lengkap','Nama','name','fullName'),
-    jenisKelamin: pick('jenisKelamin','jenis_kelamin','Jenis Kelamin','gender','kelamin','JenisKelamin'),
-    pip:          pick('pip','PIP','pip_status','statusPip','Status PIP','hasPip'),
-    namaSekolah:  pick('namaSekolah','nama_sekolah','Nama Sekolah','sekolah','asalSekolah','asal_sekolah','schoolName','namaSekolahAsal'),
-    jenisSekolah: pick('jenisSekolah','jenis_sekolah','Jenis Sekolah','tipeSekolah','statusSekolah'),
-    pilihan1:     pick('pilihan1','pilihan_1','Pilihan 1','jurusan1','jurusanPilihan1','pilihan_jurusan_1','jurusan','Jurusan','Pilihan Jurusan 1','pilihanJurusan'),
-    pilihan2:     pick('pilihan2','pilihan_2','Pilihan 2','jurusan2','jurusanPilihan2','pilihan_jurusan_2','Pilihan Jurusan 2'),
-    kecamatanSekolah: pick('kecamatanSekolah','kecamatan_sekolah','kecamatan','Kecamatan','Kecamatan Sekolah','kecamatanAsal'),
-    kabupatenSekolah: pick('kabupatenSekolah','kabupaten_sekolah','kabupaten','Kabupaten','Kabupaten/Kota','kabupatenAsal','kotaKabupaten'),
-  };
-}
-
 /* ── RENDER DATA ── */
 function renderData(d,source){
   /* ----- Hitung statistik dari data mentah jika tersedia ----- */
   let total=0,laki=0,perempuan=0,pip=0,negeri=0,swasta=0,asalSekolahSet=new Set();
   const jurusanCount={},kecCount={},kabCount={};
 
-  /* Coba parse rows mentah dari Apps Script SPMB
-     Terima berbagai nama wrapper yang mungkin dikirim Apps Script */
-  const rawRows=d.rows||d.data||d.pendaftar||d.items||d.results||d.list||d.records||[];
-  /* Normalisasi setiap row agar nama field konsisten */
-  const rows=Array.isArray(rawRows)?rawRows.map(normRow):[];
+  /* Coba parse rows mentah dari Apps Script SPMB */
+  const rows=d.rows||d.data||d.pendaftar||[];
   if(rows.length>0){
     rows.forEach(r=>{
       total++;
-      const jk=(r.jenisKelamin||'').toLowerCase();
+      const jk=(r.jenisKelamin||r.jenis_kelamin||'').toLowerCase();
       if(jk==='perempuan')perempuan++;else laki++;
-      /* Terima 'ya','yes','1',true,1 sebagai penerima PIP */
-      const pipVal=String(r.pip||'').toLowerCase().trim();
-      if(pipVal==='ya'||pipVal==='yes'||pipVal==='1'||pipVal==='true')pip++;
-      const sek=(r.namaSekolah||'').trim();
+      if((r.pip||'').toLowerCase()==='ya'||(r.pip||'')==='1')pip++;
+      const sek=(r.namaSekolah||r.nama_sekolah||'').trim();
       if(sek){
         asalSekolahSet.add(sek.toLowerCase());
-        /* Baca field jenisSekolah langsung dari form (Negeri / Swasta) */
-        const jenisSekolah=(r.jenisSekolah||'').toLowerCase().trim();
-        if(jenisSekolah.indexOf('negeri')!==-1)negeri++;
-        else if(jenisSekolah.indexOf('swasta')!==-1)swasta++;
-        /* Fallback: tebak dari nama sekolah jika jenisSekolah kosong */
-        else if(!jenisSekolah){const sn=sek.toLowerCase();if(sn.includes('negeri')||sn.includes('smpn')||sn.includes('mtsn'))negeri++;else swasta++;}
+        /* Deteksi negeri vs swasta dari nama sekolah */
+        const sekLow=sek.toLowerCase();
+        if(/\b(negeri|smpn|mtsn|sdn|n\s*\d)\b/.test(sekLow)||/ n\d/.test(sekLow)||sekLow.includes(' negeri'))negeri++;
+        else swasta++;
       }
-      const j1=normJurusan(r.pilihan1||'');
+      const j1=normJurusan(r.pilihan1||r.jurusan||'');
       if(j1&&j1!=='Lainnya')jurusanCount[j1]=(jurusanCount[j1]||0)+1;
-      const kec=(r.kecamatanSekolah||'').trim();
+      const kec=(r.kecamatanSekolah||r.kecamatan_sekolah||r.kecamatan||'').trim();
       if(kec){const norm=kec.charAt(0).toUpperCase()+kec.slice(1).toLowerCase();kecCount[norm]=(kecCount[norm]||0)+1;}
-      const kab=(r.kabupatenSekolah||'').trim();
+      const kab=(r.kabupatenSekolah||r.kabupaten_sekolah||r.kabupaten||'').trim();
       if(kab){const norm=kab.charAt(0).toUpperCase()+kab.slice(1).toLowerCase();kabCount[norm]=(kabCount[norm]||0)+1;}
     });
   } else {
@@ -1272,7 +1159,7 @@ function renderData(d,source){
   if(total>0)updatePIP(pip,total);
   updateWilayah(kecCount,kabCount);
 
-  /* Pendaftar grid — gunakan rows yang sudah ternormalisasi */
+  /* Pendaftar grid */
   if(rows.length>0){
     _allPendaftar=rows;
     _pendaftarPage=0;
@@ -1284,7 +1171,7 @@ function renderData(d,source){
   const badge=document.getElementById('data-status-badge');
   if(source==='live'){
     if(ts)ts.textContent=d.lastUpdated?'Data per '+d.lastUpdated:'Data ter-update barusan';
-    if(badge){badge.style.display='inline-flex';badge.className='data-status live';badge.textContent='Data Live — Database SMK Ciledug Al Musaddadiyah';}
+    if(badge){badge.style.display='inline-flex';badge.className='data-status live';badge.textContent='Data Live dari Google Sheets';}
   } else if(source==='cache'){
     if(ts)ts.textContent='Data dari cache lokal';
     if(badge){badge.style.display='inline-flex';badge.className='data-status live';badge.textContent='Cache — memperbarui...';}
@@ -1304,7 +1191,7 @@ function loadFallbackData(){
   setBigNum('pip',89);
   setBigNum('asal-sekolah',32);
   updateBarChart({
-    'Teknik Kendaraan Ringan':62,'Teknik Komputer & Jaringan':48,'Bisnis Digital':38,
+    'Teknik Kendaraan Ringan':62,'Teknik Jaringan Komputer':48,'Bisnis Digital':38,
     'Akuntansi Keuangan Lembaga':34,'Desain Komunikasi Visual':28,
     'Manajemen Perkantoran':22,'Teknik Sepeda Motor':15,
   });
@@ -1313,20 +1200,10 @@ function loadFallbackData(){
     {'Garut Kota':68,'Tarogong Kidul':42,'Banyuresmi':28,'Cilawu':22,'Karangtengah':18,'Wanaraja':16,'Samarang':15,'Bayongbong':14,'Karangpawitan':12,'Tarogong Kaler':12},
     {'Garut':236,'Tasikmalaya':5,'Bandung':4,'Ciamis':2}
   );
-  /* Grid pendaftar — saat fallback, tampilkan pesan informatif
-     daripada kosong sama sekali (tidak mengganggu logika lain) */
+  /* Grid pendaftar dikosongkan — data individual tidak tersedia dari API */
   _allPendaftar=[];
   _pendaftarPage=0;
-  const _fbGrid=document.getElementById('pendaftar-grid');
-  const _fbNav=document.getElementById('pendaftar-nav');
-  if(_fbGrid)_fbGrid.innerHTML='<div class="stories-empty" style="grid-column:1/-1">'+
-    '📡 <strong>Data individual pendaftar tidak tersedia saat ini.</strong><br>'+
-    '<span style="font-size:12px;color:var(--text-muted);margin-top:6px;display:block">'+
-    'Statistik ringkasan di atas ditampilkan sebagai estimasi.<br>'+
-    'Tekan <strong style="color:var(--blue-mid)">🔄 Perbarui Data</strong> untuk mencoba koneksi ke server.</span></div>';
-  if(_fbNav)_fbNav.style.display='none';
-  const _fbCnt=document.getElementById('pendaftar-count');
-  if(_fbCnt)_fbCnt.textContent='Data sedang dimuat dari server...';
+  renderPendaftarPage();
   const ts=document.getElementById('data-timestamp');
   const badge=document.getElementById('data-status-badge');
   if(ts)ts.textContent='Menampilkan data estimasi (koneksi ke server gagal)';
@@ -1334,12 +1211,12 @@ function loadFallbackData(){
 }
 
 /* ── DATA LOADER ── */
-let refreshTimer=null;
+let refreshTimer=setInterval(()=>loadData(false),10*60*1000);
 let _ctrl=null;
 
 async function loadData(forceRefresh=false){
   if(_ctrl){try{_ctrl.abort();}catch(_){}_ctrl=null;}
-  if(forceRefresh){if(refreshTimer){clearInterval(refreshTimer);}refreshTimer=setInterval(()=>loadData(false),10*60*1000);clearCache();}
+  if(forceRefresh){clearInterval(refreshTimer);refreshTimer=setInterval(()=>loadData(false),10*60*1000);clearCache();}
   const refreshBtn=document.getElementById('refresh-btn');
   if(refreshBtn)refreshBtn.classList.add('spinning');
 
@@ -1358,14 +1235,9 @@ async function loadData(forceRefresh=false){
   /* Kirim action=getInfografis agar Apps Script bisa merespons khusus */
   const url=APPS_SCRIPT_URL+'?action=getInfografis'+(forceRefresh?'&t='+Date.now():'');
   try{
-    /* follow:manual agar Apps Script redirect ditangani dengan benar */
-    const res=await fetch(url,{signal:ctrl.signal,cache:'no-store',redirect:'follow'});
+    const res=await fetch(url,{signal:ctrl.signal,cache:'no-store'});
     if(!res.ok)throw new Error('HTTP '+res.status);
-    const text=await res.text();
-    /* Bersihkan kemungkinan karakter BOM atau whitespace dari Apps Script */
-    const cleaned=text.replace(/^\uFEFF/,'').trim();
-    let d;
-    try{d=JSON.parse(cleaned);}catch(pe){throw new Error('JSON parse error: '+pe.message);}
+    const d=await res.json();
     if(d.error)throw new Error(d.error);
     saveCache(d);
     renderData(d,'live');
@@ -1389,16 +1261,12 @@ document.addEventListener('visibilitychange',()=>{
   if(document.hidden){
     clearInterval(refreshTimer);
   }else{
-    clearInterval(refreshTimer);
     loadData(false);
     refreshTimer=setInterval(()=>loadData(false),10*60*1000);
   }
 });
 
-document.addEventListener('DOMContentLoaded',()=>{
-  refreshTimer=setInterval(()=>loadData(false),10*60*1000);
-  loadData(false);
-});
+document.addEventListener('DOMContentLoaded',()=>loadData(false));
 </script>
 </body>
 </html>
