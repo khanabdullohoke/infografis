@@ -1238,7 +1238,7 @@ function renderData(d,source){
       if(kab){const norm=kab.charAt(0).toUpperCase()+kab.slice(1).toLowerCase();kabCount[norm]=(kabCount[norm]||0)+1;}
     });
   } else {
-    /* Fallback: server mungkin sudah kirim aggregat */
+    /* Fallback: server kirim statistik agregat (rows kosong atau tidak ada) */
     total=d.total||0;
     laki=d.laki||d.lakiLaki||0;
     perempuan=d.perempuan||0;
@@ -1249,6 +1249,21 @@ function renderData(d,source){
     if(d.kecamatan)Object.assign(kecCount,d.kecamatan);
     if(d.kabupaten)Object.assign(kabCount,d.kabupaten);
     if(d.asalSekolah)asalSekolahSet=new Set(Object.keys(d.asalSekolah||{}));
+    if(d.asalSekolahCount)asalSekolahSet=new Set(Array(d.asalSekolahCount).fill('x'));
+  }
+
+  /* Jika server kirim rows DAN agregat sekaligus, gunakan agregat server
+     untuk statistik (lebih akurat) tapi tetap gunakan rows untuk kartu */
+  if(rows.length>0&&d.total){
+    total=d.total||total;
+    laki=d.laki||laki;
+    perempuan=d.perempuan||perempuan;
+    pip=d.pip||pip;
+    negeri=d.sekolahNegeri||negeri;
+    swasta=d.sekolahSwasta||swasta;
+    if(d.jurusan&&Object.keys(d.jurusan).length>0){Object.keys(jurusanCount).forEach(k=>delete jurusanCount[k]);Object.assign(jurusanCount,d.jurusan);}
+    if(d.kecamatan&&Object.keys(d.kecamatan).length>0){Object.keys(kecCount).forEach(k=>delete kecCount[k]);Object.assign(kecCount,d.kecamatan);}
+    if(d.kabupaten&&Object.keys(d.kabupaten).length>0){Object.keys(kabCount).forEach(k=>delete kabCount[k]);Object.assign(kabCount,d.kabupaten);}
     if(d.asalSekolahCount)asalSekolahSet=new Set(Array(d.asalSekolahCount).fill('x'));
   }
 
