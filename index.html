@@ -1313,24 +1313,19 @@ function loadFallbackData(){
     {'Garut Kota':68,'Tarogong Kidul':42,'Banyuresmi':28,'Cilawu':22,'Karangtengah':18,'Wanaraja':16,'Samarang':15,'Bayongbong':14,'Karangpawitan':12,'Tarogong Kaler':12},
     {'Garut':236,'Tasikmalaya':5,'Bandung':4,'Ciamis':2}
   );
-  /* Grid pendaftar — saat fallback, tampilkan data contoh siswa */
-  const CONTOH_SISWA=[
-    {namaLengkap:'Ahmad Fauzi Ramadhan',jenisKelamin:'Laki-laki',pip:'Ya',namaSekolah:'SMPN 1 Garut',kecamatanSekolah:'Garut Kota',kabupatenSekolah:'Garut',pilihan1:'Teknik Kendaraan Ringan',pilihan2:'Teknik Sepeda Motor'},
-    {namaLengkap:'Siti Nurhaliza Dewi',jenisKelamin:'Perempuan',pip:'Tidak',namaSekolah:'MTsN 1 Garut',kecamatanSekolah:'Tarogong Kidul',kabupatenSekolah:'Garut',pilihan1:'Akuntansi Keuangan Lembaga',pilihan2:'Bisnis Digital'},
-    {namaLengkap:'Rizky Pratama Putra',jenisKelamin:'Laki-laki',pip:'Ya',namaSekolah:'SMPN 2 Tarogong',kecamatanSekolah:'Tarogong Kidul',kabupatenSekolah:'Garut',pilihan1:'Teknik Komputer & Jaringan',pilihan2:''},
-    {namaLengkap:'Putri Aulia Rahmawati',jenisKelamin:'Perempuan',pip:'Tidak',namaSekolah:'MTs Al-Musaddadiyah',kecamatanSekolah:'Garut Kota',kabupatenSekolah:'Garut',pilihan1:'Desain Komunikasi Visual',pilihan2:'Bisnis Digital'},
-    {namaLengkap:'Deni Kurniawan',jenisKelamin:'Laki-laki',pip:'Ya',namaSekolah:'SMPN 3 Banyuresmi',kecamatanSekolah:'Banyuresmi',kabupatenSekolah:'Garut',pilihan1:'Teknik Sepeda Motor',pilihan2:'Teknik Kendaraan Ringan'},
-    {namaLengkap:'Fitri Handayani',jenisKelamin:'Perempuan',pip:'Tidak',namaSekolah:'SMPN 1 Cilawu',kecamatanSekolah:'Cilawu',kabupatenSekolah:'Garut',pilihan1:'Manajemen Perkantoran',pilihan2:'Akuntansi Keuangan Lembaga'},
-    {namaLengkap:'Hendra Gunawan',jenisKelamin:'Laki-laki',pip:'Ya',namaSekolah:'MTs Nurul Huda',kecamatanSekolah:'Karangtengah',kabupatenSekolah:'Garut',pilihan1:'Teknik Kendaraan Ringan',pilihan2:''},
-    {namaLengkap:'Nadia Rahayu Saputri',jenisKelamin:'Perempuan',pip:'Tidak',namaSekolah:'SMPN 2 Wanaraja',kecamatanSekolah:'Wanaraja',kabupatenSekolah:'Garut',pilihan1:'Bisnis Digital',pilihan2:'Desain Komunikasi Visual'},
-    {namaLengkap:'Muhamad Ilham Firdaus',jenisKelamin:'Laki-laki',pip:'Ya',namaSekolah:'MTs Persis Tarogong',kecamatanSekolah:'Tarogong Kaler',kabupatenSekolah:'Garut',pilihan1:'Teknik Komputer & Jaringan',pilihan2:'Desain Komunikasi Visual'},
-    {namaLengkap:'Rina Marlina',jenisKelamin:'Perempuan',pip:'Tidak',namaSekolah:'SMPN 1 Samarang',kecamatanSekolah:'Samarang',kabupatenSekolah:'Garut',pilihan1:'Akuntansi Keuangan Lembaga',pilihan2:'Manajemen Perkantoran'},
-    {namaLengkap:'Agus Setiawan',jenisKelamin:'Laki-laki',pip:'Ya',namaSekolah:'MTs Negeri Bayongbong',kecamatanSekolah:'Bayongbong',kabupatenSekolah:'Garut',pilihan1:'Teknik Kendaraan Ringan',pilihan2:'Teknik Sepeda Motor'},
-    {namaLengkap:'Dewi Ratnasari',jenisKelamin:'Perempuan',pip:'Tidak',namaSekolah:'SMPN 1 Karangpawitan',kecamatanSekolah:'Karangpawitan',kabupatenSekolah:'Garut',pilihan1:'Manajemen Perkantoran',pilihan2:'Bisnis Digital'},
-  ].map(normRow);
-  _allPendaftar=CONTOH_SISWA;
+  /* Grid pendaftar — saat fallback, kosongkan agar sinkron dengan
+     statistik estimasi di atas (tidak ada data individual yang bisa ditampilkan) */
+  _allPendaftar=[];
   _pendaftarPage=0;
-  renderPendaftarPage();
+  const _fbGrid=document.getElementById('pendaftar-grid');
+  if(_fbGrid)_fbGrid.innerHTML=
+    '<div class="stories-empty" style="grid-column:1/-1;padding:48px 24px">'+
+    '<div style="font-size:36px;margin-bottom:12px">\uD83D\uDCE1</div>'+
+    '<strong style="font-size:15px;color:var(--text-dark);display:block;margin-bottom:8px">Data pendaftar sedang dihubungi ke server...</strong>'+
+    '<span style="font-size:13px;color:var(--text-muted);line-height:1.7;display:block">'+
+    'Tekan <strong style="color:var(--blue-mid)">\uD83D\uDD04 Perbarui Data</strong> di bagian Infografis untuk memuat data pendaftar.</span>'+
+    '</div>';
+  document.getElementById('pendaftar-nav').style.display='none';
   const _fbCnt=document.getElementById('pendaftar-count');
   if(_fbCnt)_fbCnt.textContent='Data sedang dimuat dari server...';
   const ts=document.getElementById('data-timestamp');
