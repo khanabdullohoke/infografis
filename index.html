@@ -1354,12 +1354,11 @@ async function loadData(forceRefresh=false){
   /* 2) Fetch live */
   const ctrl=new AbortController();
   _ctrl=ctrl;
-  const timeoutId=setTimeout(()=>{try{ctrl.abort();}catch(_){}},10000);
-  /* Kirim action=getInfografis agar Apps Script bisa merespons khusus */
-  const url=APPS_SCRIPT_URL+'?action=getInfografis'+(forceRefresh?'&t='+Date.now():'');
+  const timeoutId=setTimeout(()=>{try{ctrl.abort();}catch(_){}},15000);
+  /* no-cors tidak bisa baca response — gunakan cors biasa, Apps Script sudah support */
+  const url=APPS_SCRIPT_URL+'?action=getInfografis&t='+Date.now();
   try{
-    /* follow:manual agar Apps Script redirect ditangani dengan benar */
-    const res=await fetch(url,{signal:ctrl.signal,cache:'no-store',redirect:'follow'});
+    const res=await fetch(url,{signal:ctrl.signal,cache:'no-store'});
     if(!res.ok)throw new Error('HTTP '+res.status);
     const text=await res.text();
     /* Bersihkan kemungkinan karakter BOM atau whitespace dari Apps Script */
@@ -1371,12 +1370,15 @@ async function loadData(forceRefresh=false){
     renderData(d,'live');
     if(forceRefresh)showToast('Data berhasil diperbarui! ✅',false);
   }catch(e){
+    /* Hanya tampilkan fallback jika belum ada data apapun di layar */
+    const gridHasRealData=_allPendaftar.length>0;
     if(e&&e.name==='AbortError'){
-      if(!cached)loadFallbackData();
+      if(!cached&&!gridHasRealData)loadFallbackData();
       return;
     }
-    if(!cached)loadFallbackData();
-    if(forceRefresh)showToast('Gagal memperbarui. Cek koneksimu.',true);
+    if(!cached&&!gridHasRealData)loadFallbackData();
+    if(forceRefresh)showToast('Gagal memperbarui: '+e.message,true);
+    console.warn('[SPMB] Fetch error:',e.message);
   }finally{
     clearTimeout(timeoutId);
     _ctrl=null;
