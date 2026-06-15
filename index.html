@@ -1288,8 +1288,12 @@ function renderData(d,source){
   updateWilayah(kecCount,kabCount);
 
   /* Pendaftar grid — selalu update grid saat data live/cache diterima,
-     agar tidak tertimpa data dummy dari fallback */
-  _allPendaftar=rows;
+     agar tidak tertimpa data dummy dari fallback.
+     Urutan dari Google Sheet adalah dari pendaftar paling lama ke paling baru
+     (baris baru ditambahkan di bawah), sedangkan yang ingin ditampilkan
+     pertama kali adalah pendaftar yang TERAKHIR mendaftar.
+     Maka urutan dibalik (reverse) agar pendaftar terbaru muncul di halaman 1. */
+  _allPendaftar=rows.slice().reverse();
   _pendaftarPage=0;
   renderPendaftarPage();
 
