@@ -525,6 +525,11 @@ img,svg{display:block}
         </div>
         <h1>Selamat Datang di <em>SMKS Ciledug</em><br>Al Musaddadiyah Garut</h1>
         <p>Pantau data pendaftar SPMB 2026/2027 secara real-time. Infografis interaktif, sebaran jurusan, dan statistik lengkap calon peserta didik baru.</p>
+        <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(255,179,0,.13);border:1.5px solid rgba(255,179,0,.45);border-radius:50px;padding:7px 16px;margin-bottom:18px;flex-wrap:wrap;max-width:100%">
+          <span style="font-size:16px;line-height:1">&#x1F91D;</span>
+          <span style="font-family:'Plus Jakarta Sans',sans-serif;font-size:12.5px;font-weight:800;color:var(--gold-light);letter-spacing:.03em">Sekolah Swasta Kerjasama <span style="background:var(--gold);color:var(--blue-deep);border-radius:50px;padding:1px 9px;font-size:11px;margin-left:4px;font-weight:900">SSK</span></span>
+          <span style="font-size:11px;color:rgba(255,255,255,.6);font-weight:500">&#x2014; Mitra Resmi Dinas Pendidikan Provinsi Jawa Barat</span>
+        </div>
         <div class="hero-btns">
           <a class="btn-gold" href="#infografis">
             <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="2" y="10" width="3" height="4" rx="1"/><rect x="6.5" y="6" width="3" height="8" rx="1"/><rect x="11" y="2" width="3" height="12" rx="1"/></svg>
@@ -606,7 +611,7 @@ img,svg{display:block}
     <!-- BAR CHART + DONUT -->
     <div class="charts-row reveal">
       <div class="chart-box">
-        <h3>Pilihan Jurusan (Pilihan 1)</h3>
+        <h3>Pilihan Jurusan (Pilihan 1) <span style="font-size:10px;font-weight:600;color:var(--text-muted);font-family:'DM Sans',sans-serif">— % kapasitas (36 siswa = 100%)</span></h3>
         <div id="bar-chart-jurusan" class="bar-chart">
           <div style="color:var(--text-muted);font-size:13px;padding:18px 0;text-align:center">⏳ Memuat data jurusan...</div>
         </div>
@@ -961,6 +966,7 @@ function showToast(msg,isErr=true){
 function esc(str){if(!str)return'';return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#x27;');}
 
 /* ── BAR CHART JURUSAN ── */
+const KAPASITAS_PER_JURUSAN=36; /* 1 kelas = 36 siswa = 100% */
 function updateBarChart(jurusanData){
   const container=document.getElementById('bar-chart-jurusan');
   if(!container)return;
@@ -970,7 +976,12 @@ function updateBarChart(jurusanData){
   container.innerHTML=sorted.slice(0,8).map(([nama,jumlah],i)=>{
     const pct=Math.round((jumlah/max)*100);
     const shortName=nama.length>14?nama.substring(0,14)+'…':nama;
-    return`<div class="bar-row"><div class="bar-label" title="${esc(nama)}">${esc(shortName)}</div><div class="bar-track"><div class="bar-fill" style="width:0%;background:${colors[i%colors.length]}" data-pct="${pct}">${parseInt(jumlah)||0}</div></div><div class="bar-pct">${pct}%</div></div>`;
+    /* Kapasitas: 36 = 100%, 72 = 200% */
+    const kapPct=Math.round((jumlah/KAPASITAS_PER_JURUSAN)*100);
+    let kapLabel='';
+    if(kapPct>=200){kapLabel=`<span style="margin-left:6px;font-size:9px;font-weight:800;background:var(--gold);color:var(--blue-deep);padding:1px 6px;border-radius:50px;white-space:nowrap">200% PENUH</span>`;}
+    else if(kapPct>=100){kapLabel=`<span style="margin-left:6px;font-size:9px;font-weight:800;background:#e8f5e9;color:var(--green);padding:1px 6px;border-radius:50px;white-space:nowrap">100% PENUH</span>`;}
+    return`<div class="bar-row"><div class="bar-label" title="${esc(nama)}">${esc(shortName)}</div><div class="bar-track"><div class="bar-fill" style="width:0%;background:${colors[i%colors.length]}" data-pct="${pct}">${parseInt(jumlah)||0}${kapLabel}</div></div><div class="bar-pct">${kapPct}%</div></div>`;
   }).join('');
   requestAnimationFrame(()=>{
     container.querySelectorAll('.bar-fill').forEach(bar=>{bar.style.width=bar.dataset.pct+'%';});
@@ -1204,7 +1215,7 @@ function normRow(r){
 /* ── RENDER DATA ── */
 function renderData(d,source){
   /* ----- Hitung statistik dari data mentah jika tersedia ----- */
-  let total=0,laki=0,perempuan=0,pip=0,negeri=0,swasta=0,asalSekolahSet=new Set();
+  let total=0,laki=0,perempuan=0,pip=0,negeri=0,swasta=0,ssk=0,asalSekolahSet=new Set();
   const jurusanCount={},kecCount={},kabCount={};
 
   /* Coba parse rows mentah dari Apps Script SPMB
@@ -1226,6 +1237,7 @@ function renderData(d,source){
         /* Baca field jenisSekolah langsung dari form (Negeri / Swasta) */
         const jenisSekolah=(r.jenisSekolah||'').toLowerCase().trim();
         if(jenisSekolah.indexOf('negeri')!==-1)negeri++;
+        else if(jenisSekolah.indexOf('swasta kerjasama')!==-1||jenisSekolah.indexOf('ssk')!==-1){swasta++;ssk++;}
         else if(jenisSekolah.indexOf('swasta')!==-1)swasta++;
         /* Fallback: tebak dari nama sekolah jika jenisSekolah kosong */
         else if(!jenisSekolah){const sn=sek.toLowerCase();if(sn.includes('negeri')||sn.includes('smpn')||sn.includes('mtsn'))negeri++;else swasta++;}
@@ -1245,6 +1257,7 @@ function renderData(d,source){
     pip=d.pip||0;
     negeri=d.sekolahNegeri||d.negeri||0;
     swasta=d.sekolahSwasta||d.swasta||0;
+    ssk=d.sekolahSSK||d.ssk||0;
     if(d.jurusan)Object.assign(jurusanCount,d.jurusan);
     if(d.kecamatan)Object.assign(kecCount,d.kecamatan);
     if(d.kabupaten)Object.assign(kabCount,d.kabupaten);
@@ -1261,6 +1274,7 @@ function renderData(d,source){
     pip=d.pip||pip;
     negeri=d.sekolahNegeri||negeri;
     swasta=d.sekolahSwasta||swasta;
+    ssk=d.sekolahSSK||ssk;
     if(d.jurusan&&Object.keys(d.jurusan).length>0){Object.keys(jurusanCount).forEach(k=>delete jurusanCount[k]);Object.assign(jurusanCount,d.jurusan);}
     if(d.kecamatan&&Object.keys(d.kecamatan).length>0){Object.keys(kecCount).forEach(k=>delete kecCount[k]);Object.assign(kecCount,d.kecamatan);}
     if(d.kabupaten&&Object.keys(d.kabupaten).length>0){Object.keys(kabCount).forEach(k=>delete kabCount[k]);Object.assign(kabCount,d.kabupaten);}
@@ -1275,6 +1289,7 @@ function renderData(d,source){
   setHeroCounter('jumlah-jurusan',jmlJurusan||7,'');
   setHeroCounter('dari-negeri',negeri,'');
   setHeroCounter('dari-swasta',swasta,'');
+  setHeroCounter('dari-ssk',ssk,'');
   setHeroCounter('jumlah-kecamatan',Object.keys(kecCount).length,'');
   setBigNum('laki',laki);
   setBigNum('perempuan',perempuan);
@@ -1316,6 +1331,7 @@ function loadFallbackData(){
   setHeroCounter('jumlah-jurusan',7,'');
   setHeroCounter('dari-negeri',158,'');
   setHeroCounter('dari-swasta',89,'');
+  setHeroCounter('dari-ssk',21,'');
   setHeroCounter('jumlah-kecamatan',10,'');
   setBigNum('laki',143);
   setBigNum('perempuan',104);
