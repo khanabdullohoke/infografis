@@ -1385,7 +1385,7 @@ function renderData(d,source){
   /* ----- Hitung statistik dari data mentah jika tersedia ----- */
   let total=0,laki=0,perempuan=0,pip=0,negeri=0,swasta=0,ssk=0,asalSekolahSet=new Set();
   /* Set khusus: hanya sekolah PKB atau MTs (untuk card Asal Sekolah) */
-  const asalPkbMtsSet=new Set();
+  let pkbMtsCount=0;
   const jurusanCount={},kecCount={},kabCount={};
 
   /* Coba parse rows mentah dari Apps Script SPMB
@@ -1406,7 +1406,7 @@ function renderData(d,source){
       if(sek){
         asalSekolahSet.add(sek.toLowerCase());
         /* Filter khusus PKB atau MTs untuk card Asal Sekolah */
-        const sekLow=sek.toLowerCase();if(sekLow.includes('pkb')||sekLow.includes('mts'))asalPkbMtsSet.add(sekLow);
+        const sekLow=sek.toLowerCase();if(sekLow.includes('pkb')||sekLow.includes('mts'))pkbMtsCount++;
         /* Baca field jenisSekolah langsung dari form (Negeri / Swasta) */
         const jenisSekolah=(r.jenisSekolah||'').toLowerCase().trim();
         if(jenisSekolah.indexOf('negeri')!==-1)negeri++;
@@ -1480,7 +1480,7 @@ function renderData(d,source){
   setBigNum('laki',laki);
   setBigNum('perempuan',perempuan);
   setBigNum('pip',pip);
-  setBigNum('asal-sekolah',asalPkbMtsSet.size||parseInt(d.asalSekolahCount,10)||0);
+  setBigNum('asal-sekolah',pkbMtsCount||parseInt(d.asalSekolahCount,10)||0);
 
   if(jmlJurusan>0){updateBarChart(jurusanCount);}
   else{
