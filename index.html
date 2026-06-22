@@ -1091,10 +1091,12 @@ const _escMap={'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#x27;'};
 function esc(str){if(!str)return'';return String(str).replace(/[&<>"']/g,c=>_escMap[c]);}
 
 /* ── BAR CHART JURUSAN ── */
-const KAPASITAS_PER_JURUSAN=36; /* 1 kelas = 36 siswa = 100% */
+const KAPASITAS_PER_JURUSAN=36;
 const _BAR_COLORS=['linear-gradient(90deg,#1565c0,#1e88e5)','linear-gradient(90deg,#7b1fa2,#9c27b0)','linear-gradient(90deg,#1e8c4e,#4caf50)','linear-gradient(90deg,#e65100,#ff6d00)','linear-gradient(90deg,#ffb300,#ffd54f)','linear-gradient(90deg,#0097a7,#00bcd4)','linear-gradient(90deg,#ad1457,#ec407a)','linear-gradient(90deg,#33691e,#558b2f)'];
+let _barContainer=null;
 function updateBarChart(jurusanData){
-  const container=document.getElementById('bar-chart-jurusan');
+  if(!_barContainer)_barContainer=document.getElementById('bar-chart-jurusan');
+  const container=_barContainer;
   if(!container)return;
   const sorted=Object.entries(jurusanData).sort((a,b)=>b[1]-a[1]);
   const max=sorted[0]?.[1]||1;
@@ -1119,41 +1121,45 @@ function updateBarChart(jurusanData){
 }
 
 /* ── PIP INFOGRAFIS UPDATE ── */
+/* Cache semua elemen PIP sekali pakai */
+let _pipEl=null;
+function _getPipEl(){
+  if(_pipEl)return _pipEl;
+  _pipEl={
+    disp:   document.getElementById('pip-pct-display'),
+    pipFill:document.getElementById('pip-bar-fill'),
+    nonFill:document.getElementById('nonpip-bar-fill'),
+    pv:     document.getElementById('pip-bar-val'),
+    nv:     document.getElementById('nonpip-bar-val'),
+    pp:     document.getElementById('pip-bar-pct'),
+    np:     document.getElementById('nonpip-bar-pct'),
+    arc:    document.getElementById('pip-donut-arc'),
+    dc:     document.getElementById('pip-donut-center'),
+    lp:     document.getElementById('pip-legend-pip'),
+    ln:     document.getElementById('pip-legend-nonpip'),
+  };
+  return _pipEl;
+}
 function updatePIP(pip,total){
   const nonpip=Math.max(total-pip,0);
   const pctPip=total>0?Math.round((pip/total)*100):0;
   const pctNon=total>0?(100-pctPip):0;
   const circ=2*Math.PI*34;
   const lenPip=(pip/(total||1))*circ;
-
-  /* big stat */
-  const dispEl=document.getElementById('pip-pct-display');
-  if(dispEl)dispEl.textContent=pctPip+'%';
-
-  /* Read all elements first, then write — avoids layout thrashing */
-  const pipFill=document.getElementById('pip-bar-fill');
-  const nonFill=document.getElementById('nonpip-bar-fill');
-  const pv=document.getElementById('pip-bar-val');
-  const nv=document.getElementById('nonpip-bar-val');
-  const pp=document.getElementById('pip-bar-pct');
-  const np=document.getElementById('nonpip-bar-pct');
-  const arc=document.getElementById('pip-donut-arc');
-  const dc=document.getElementById('pip-donut-center');
-  const lp=document.getElementById('pip-legend-pip');
-  const ln=document.getElementById('pip-legend-nonpip');
-
+  const e=_getPipEl();
+  if(e.disp)e.disp.textContent=pctPip+'%';
+  if(e.pv)e.pv.textContent=pip;
+  if(e.nv)e.nv.textContent=nonpip;
+  if(e.pp)e.pp.textContent=pctPip+'%';
+  if(e.np)e.np.textContent=pctNon+'%';
+  if(e.dc)e.dc.textContent=pctPip+'%';
+  if(e.lp)e.lp.textContent=pip+' siswa';
+  if(e.ln)e.ln.textContent=nonpip+' siswa';
   requestAnimationFrame(()=>{
-    if(pipFill)pipFill.style.width=pctPip+'%';
-    if(nonFill)nonFill.style.width=pctNon+'%';
-    if(arc)arc.style.strokeDasharray=`${lenPip} ${circ}`;
+    if(e.pipFill)e.pipFill.style.width=pctPip+'%';
+    if(e.nonFill)e.nonFill.style.width=pctNon+'%';
+    if(e.arc)e.arc.style.strokeDasharray=`${lenPip} ${circ}`;
   });
-  if(pv)pv.textContent=pip;
-  if(nv)nv.textContent=nonpip;
-  if(pp)pp.textContent=pctPip+'%';
-  if(np)np.textContent=pctNon+'%';
-  if(dc)dc.textContent=pctPip+'%';
-  if(lp)lp.textContent=pip+' siswa';
-  if(ln)ln.textContent=nonpip+' siswa';
 }
 
 /* ── WILAYAH TABLE ── */
@@ -1193,21 +1199,30 @@ function buildWilayahTable(data,maxRow,isKab){
   </table>`;
 }
 
+/* Cache elemen wilayah */
+let _wEl=null;
+function _getWEl(){
+  if(_wEl)return _wEl;
+  _wEl={
+    badge:   document.getElementById('wilayah-badge'),
+    badgeKec:document.getElementById('badge-kec'),
+    badgeKab:document.getElementById('badge-kab'),
+    tblKec:  document.getElementById('tabel-kecamatan'),
+    tblKab:  document.getElementById('tabel-kabupaten'),
+  };
+  return _wEl;
+}
 function updateWilayah(kecData,kabData){
-  const badge=document.getElementById('wilayah-badge');
-  const badgeKec=document.getElementById('badge-kec');
-  const badgeKab=document.getElementById('badge-kab');
-  const tblKec=document.getElementById('tabel-kecamatan');
-  const tblKab=document.getElementById('tabel-kabupaten');
+  const w=_getWEl();
   const kecArr=Object.entries(kecData||{}).sort((a,b)=>b[1]-a[1]);
   const kabArr=Object.entries(kabData||{}).sort((a,b)=>b[1]-a[1]);
   let totalKec=0;for(let i=0;i<kecArr.length;i++)totalKec+=(parseInt(kecArr[i][1])||0);
   let totalKab=0;for(let i=0;i<kabArr.length;i++)totalKab+=(parseInt(kabArr[i][1])||0);
-  if(badge)badge.textContent=`🗺️ ${kecArr.length} Kecamatan · ${kabArr.length} Kabupaten/Kota`;
-  if(badgeKec)badgeKec.textContent=`${kecArr.length} lokasi · ${totalKec} pendaftar`;
-  if(badgeKab)badgeKab.textContent=`${kabArr.length} kabupaten · ${totalKab} pendaftar`;
-  if(tblKec)tblKec.innerHTML=buildWilayahTable(kecArr,12,false);
-  if(tblKab)tblKab.innerHTML=buildWilayahTable(kabArr,10,true);
+  if(w.badge)w.badge.textContent=`🗺️ ${kecArr.length} Kecamatan · ${kabArr.length} Kabupaten/Kota`;
+  if(w.badgeKec)w.badgeKec.textContent=`${kecArr.length} lokasi · ${totalKec} pendaftar`;
+  if(w.badgeKab)w.badgeKab.textContent=`${kabArr.length} kabupaten · ${totalKab} pendaftar`;
+  if(w.tblKec)w.tblKec.innerHTML=buildWilayahTable(kecArr,12,false);
+  if(w.tblKab)w.tblKab.innerHTML=buildWilayahTable(kabArr,10,true);
 }
 
 /* ── PENDAFTAR GRID ── */
@@ -1216,16 +1231,8 @@ let _pendaftarPage=0;
 const PER_PAGE=6;
 const GRADIENTS=['linear-gradient(135deg,#1565c0,#1e88e5)','linear-gradient(135deg,#7b1fa2,#ab47bc)','linear-gradient(135deg,#1b5e20,#388e3c)','linear-gradient(135deg,#e65100,#ff6d00)','linear-gradient(135deg,#0097a7,#00bcd4)','linear-gradient(135deg,#ad1457,#ec407a)'];
 
-/* Cache frequently accessed pendaftar-section DOM elements */
-const _DOM={
-  get grid(){return document.getElementById('pendaftar-grid');},
-  get nav(){return document.getElementById('pendaftar-nav');},
-  get prev(){return document.getElementById('pendaftar-prev');},
-  get next(){return document.getElementById('pendaftar-next');},
-  get dots(){return document.getElementById('pendaftar-dots');},
-  get pageInfo(){return document.getElementById('pendaftar-page-info');},
-  get count(){return document.getElementById('pendaftar-count');},
-};
+/* Cache DOM elements — diisi saat DOMContentLoaded, tidak query ulang */
+const _DOM={grid:null,nav:null,prev:null,next:null,dots:null,pageInfo:null,count:null};
 
 function renderPendaftarPage(){
   const grid=_DOM.grid;
@@ -1243,7 +1250,15 @@ function renderPendaftarPage(){
   for(let i=0;i<slice.length;i++){
     const p=slice[i];
     const gi=start+i;
-    const initial=(p.namaLengkap||p.nama||'?').split(' ').filter(Boolean).map(w=>w[0]).join('').toUpperCase().slice(0,2);
+    /* Ambil 2 inisial tanpa split+filter+map */
+    const rawName=p.namaLengkap||p.nama||'?';
+    let initial='';
+    let inWord=false;
+    for(let ci=0;ci<rawName.length&&initial.length<2;ci++){
+      const ch=rawName[ci];
+      if(ch===' '||ch==='\t'){inWord=false;}
+      else if(!inWord){initial+=ch.toUpperCase();inWord=true;}
+    }
     const grad=GRADIENTS[gi%GRADIENTS.length];
     const jk=(p.jenisKelamin||'').toLowerCase();
     const jkEmoji=jk==='perempuan'?'👧':'👦';
@@ -1429,14 +1444,24 @@ function renderData(d,source){
     negeri=d.sekolahNegeri||negeri;
     swasta=d.sekolahSwasta||swasta;
     ssk=d.sekolahSSK||ssk;
-    if(d.jurusan&&Object.keys(d.jurusan).length>0){Object.keys(jurusanCount).forEach(k=>delete jurusanCount[k]);Object.assign(jurusanCount,d.jurusan);}
-    if(d.kecamatan&&Object.keys(d.kecamatan).length>0){Object.keys(kecCount).forEach(k=>delete kecCount[k]);Object.assign(kecCount,d.kecamatan);}
-    if(d.kabupaten&&Object.keys(d.kabupaten).length>0){Object.keys(kabCount).forEach(k=>delete kabCount[k]);Object.assign(kabCount,d.kabupaten);}
+    if(d.jurusan&&Object.keys(d.jurusan).length>0){
+      for(const k in jurusanCount)delete jurusanCount[k];
+      Object.assign(jurusanCount,d.jurusan);
+    }
+    if(d.kecamatan&&Object.keys(d.kecamatan).length>0){
+      for(const k in kecCount)delete kecCount[k];
+      Object.assign(kecCount,d.kecamatan);
+    }
+    if(d.kabupaten&&Object.keys(d.kabupaten).length>0){
+      for(const k in kabCount)delete kabCount[k];
+      Object.assign(kabCount,d.kabupaten);
+    }
     if(d.asalSekolahCount)asalSekolahSet=new Set(Array(d.asalSekolahCount).fill('x'));
   }
 
   const pctPip=total>0?Math.round((pip/total)*100):0;
-  const jmlJurusan=Object.keys(jurusanCount).length;
+  const jurusanKeys=Object.keys(jurusanCount);
+  const jmlJurusan=jurusanKeys.length;
 
   setHeroCounter('total',total,'');
   setHeroCounter('persen-pip',pctPip,'%');
@@ -1450,8 +1475,11 @@ function renderData(d,source){
   setBigNum('pip',pip);
   setBigNum('asal-sekolah',asalSekolahSet.size||d.asalSekolahCount||0);
 
-  if(Object.keys(jurusanCount).length>0){updateBarChart(jurusanCount);}
-  else{document.getElementById('bar-chart-jurusan').innerHTML='<div style="color:var(--text-muted);font-size:13px;padding:18px 0;text-align:center">Belum ada data pilihan jurusan.</div>';}
+  if(jmlJurusan>0){updateBarChart(jurusanCount);}
+  else{
+    if(!_barContainer)_barContainer=document.getElementById('bar-chart-jurusan');
+    if(_barContainer)_barContainer.innerHTML='<div style="color:var(--text-muted);font-size:13px;padding:18px 0;text-align:center">Belum ada data pilihan jurusan.</div>';
+  }
 
   if(total>0)updatePIP(pip,total);
   updateWilayah(kecCount,kabCount);
@@ -1467,8 +1495,7 @@ function renderData(d,source){
   renderPendaftarPage();
 
   /* Timestamp & status */
-  const ts=document.getElementById('data-timestamp');
-  const badge=document.getElementById('data-status-badge');
+  const{ts,badge}=_getStatusEl();
   if(source==='live'){
     if(ts)ts.textContent=d.lastUpdated?'Data per '+d.lastUpdated:'Data ter-update barusan';
     if(badge){badge.style.display='inline-flex';badge.className='data-status live';badge.textContent='Data Live — Database SMK Ciledug Al Musaddadiyah';}
@@ -1478,7 +1505,14 @@ function renderData(d,source){
   }
 }
 
-/* ── FALLBACK DATA (estimasi) ── */
+/* Cache elemen status & timestamp */
+let _tsEl=null,_badgeEl=null,_refreshBtn=null;
+
+function _getStatusEl(){
+  if(!_tsEl)_tsEl=document.getElementById('data-timestamp');
+  if(!_badgeEl)_badgeEl=document.getElementById('data-status-badge');
+  return{ts:_tsEl,badge:_badgeEl};
+}
 function loadFallbackData(){
   setHeroCounter('total',247,'');
   setHeroCounter('persen-pip',36,'%');
@@ -1501,23 +1535,19 @@ function loadFallbackData(){
     {'Garut Kota':68,'Tarogong Kidul':42,'Banyuresmi':28,'Cilawu':22,'Karangtengah':18,'Wanaraja':16,'Samarang':15,'Bayongbong':14,'Karangpawitan':12,'Tarogong Kaler':12},
     {'Garut':236,'Tasikmalaya':5,'Bandung':4,'Ciamis':2}
   );
-  /* Grid pendaftar — saat fallback, kosongkan agar sinkron dengan
-     statistik estimasi di atas (tidak ada data individual yang bisa ditampilkan) */
   _allPendaftar=[];
   _pendaftarPage=0;
-  const _fbGrid=document.getElementById('pendaftar-grid');
-  if(_fbGrid)_fbGrid.innerHTML=
+  const fbGrid=_DOM.grid;
+  if(fbGrid)fbGrid.innerHTML=
     '<div class="stories-empty" style="grid-column:1/-1;padding:48px 24px">'+
     '<div style="font-size:36px;margin-bottom:12px">\uD83D\uDCE1</div>'+
     '<strong style="font-size:15px;color:var(--text-dark);display:block;margin-bottom:8px">Data pendaftar sedang dihubungi ke server...</strong>'+
     '<span style="font-size:13px;color:var(--text-muted);line-height:1.7;display:block">'+
     'Tekan <strong style="color:var(--blue-mid)">\uD83D\uDD04 Perbarui Data</strong> di bagian Infografis untuk memuat data pendaftar.</span>'+
     '</div>';
-  document.getElementById('pendaftar-nav').style.display='none';
-  const _fbCnt=document.getElementById('pendaftar-count');
-  if(_fbCnt)_fbCnt.textContent='Data sedang dimuat dari server...';
-  const ts=document.getElementById('data-timestamp');
-  const badge=document.getElementById('data-status-badge');
+  if(_DOM.nav)_DOM.nav.style.display='none';
+  if(_DOM.count)_DOM.count.textContent='Data sedang dimuat dari server...';
+  const{ts,badge}=_getStatusEl();
   if(ts)ts.textContent='Menampilkan data contoh (koneksi ke server gagal — tekan Perbarui untuk mencoba lagi)';
   if(badge){badge.style.display='inline-flex';badge.className='data-status error';badge.textContent='⚠️ Data Contoh — Tekan 🔄 Perbarui untuk memuat data asli';}
 }
@@ -1529,8 +1559,8 @@ let _ctrl=null;
 async function loadData(forceRefresh=false){
   if(_ctrl){try{_ctrl.abort();}catch(_){}_ctrl=null;}
   if(forceRefresh){if(refreshTimer){clearInterval(refreshTimer);}refreshTimer=setInterval(()=>loadData(false),10*60*1000);clearCache();}
-  const refreshBtn=document.getElementById('refresh-btn');
-  if(refreshBtn)refreshBtn.classList.add('spinning');
+  if(!_refreshBtn)_refreshBtn=document.getElementById('refresh-btn');
+  if(_refreshBtn)_refreshBtn.classList.add('spinning');
 
   /* 1) Tampilkan cache segera */
   const cached=loadCache();
@@ -1571,7 +1601,7 @@ async function loadData(forceRefresh=false){
   }finally{
     clearTimeout(timeoutId);
     _ctrl=null;
-    if(refreshBtn)refreshBtn.classList.remove('spinning');
+    if(_refreshBtn)_refreshBtn.classList.remove('spinning');
   }
 }
 
@@ -1587,6 +1617,20 @@ document.addEventListener('visibilitychange',()=>{
 });
 
 document.addEventListener('DOMContentLoaded',()=>{
+  /* Init semua cache DOM sekaligus — satu kali, di sini */
+  _DOM.grid    =document.getElementById('pendaftar-grid');
+  _DOM.nav     =document.getElementById('pendaftar-nav');
+  _DOM.prev    =document.getElementById('pendaftar-prev');
+  _DOM.next    =document.getElementById('pendaftar-next');
+  _DOM.dots    =document.getElementById('pendaftar-dots');
+  _DOM.pageInfo=document.getElementById('pendaftar-page-info');
+  _DOM.count   =document.getElementById('pendaftar-count');
+  _refreshBtn  =document.getElementById('refresh-btn');
+  /* Pre-warm cache elemen lain */
+  _getStatusEl();
+  _getPipEl();
+  _getWEl();
+
   refreshTimer=setInterval(()=>loadData(false),10*60*1000);
   loadData(false);
 });
