@@ -11,13 +11,6 @@
 <meta property="og:description" content="Visualisasi data pendaftar SPMB SMKS Ciledug Al Musaddadiyah Garut 2026/2027 — real-time, interaktif."/>
 <meta property="og:url" content="https://www.smkciledugalmusaddadiyah.sch.id"/>
 <meta name="theme-color" content="#0b3d91"/>
-<meta name="robots" content="index, follow"/>
-<meta name="author" content="SMKS Ciledug Al Musaddadiyah Garut"/>
-<meta name="keywords" content="SPMB 2026, SMK Ciledug, Al Musaddadiyah, Garut, pendaftaran siswa baru, infografis PPDB"/>
-<meta property="og:image" content="https://www.smkciledugalmusaddadiyah.sch.id/favicon.ico"/>
-<meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Infografis Pendaftar SPMB — SMKS Ciledug Al Musaddadiyah 2026/2027"/>
-<meta name="twitter:description" content="Visualisasi data pendaftar SPMB SMKS Ciledug Al Musaddadiyah Garut 2026/2027 — real-time, interaktif."/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,700;0,800;0,900;1,900&family=DM+Sans:wght@400;600&display=swap"/>
@@ -38,7 +31,7 @@
   --transition:.2s cubic-bezier(.4,0,.2,1);
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth;font-size:16px;-webkit-font-smoothing:antialiased;text-size-adjust:100%}
+html{scroll-behavior:smooth;font-size:16px;-webkit-font-smoothing:antialiased}
 body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text-dark);overflow-x:hidden;line-height:1.6}
 h1,h2,h3,h4,h5,h6{font-family:'Plus Jakarta Sans',sans-serif;line-height:1.15}
 a{text-decoration:none;color:inherit}
@@ -164,7 +157,6 @@ img,svg{display:block}
 
 /* ── SECTION BASE ── */
 .section{padding:68px 0}
-.section+.section{content-visibility:auto;contain-intrinsic-size:0 600px}
 .container{max-width:1200px;margin:0 auto;padding:0 20px}
 .section-header{text-align:center;margin-bottom:44px}
 .section-label{
@@ -219,7 +211,7 @@ img,svg{display:block}
 .bar-row{display:flex;align-items:center;gap:10px}
 .bar-label{font-size:10.5px;color:var(--text-mid);width:86px;flex-shrink:0;text-align:right;line-height:1.3}
 .bar-track{flex:1;height:28px;background:var(--blue-pale);border-radius:7px;overflow:hidden}
-.bar-fill{height:100%;border-radius:7px;display:flex;align-items:center;padding-left:8px;font-size:10.5px;font-weight:700;color:#fff;transition:width 1s cubic-bezier(.22,1,.36,1)}
+.bar-fill{height:100%;border-radius:7px;display:flex;align-items:center;padding-left:8px;font-size:10.5px;font-weight:700;color:#fff;transition:width 1s cubic-bezier(.22,1,.36,1);will-change:width}
 .bar-pct{font-size:10.5px;color:var(--text-muted);width:34px;text-align:right;flex-shrink:0}
 
 .pip-bar-pct{font-size:10.5px;font-weight:700;color:var(--text-muted);width:30px;text-align:right;flex-shrink:0}
@@ -289,7 +281,7 @@ img,svg{display:block}
 .pip-label-green{color:var(--green)}
 .pip-label-gray{color:#78909c}
 .pip-bar-track{flex:1;height:26px;background:#f0f4f8;border-radius:6px;overflow:hidden}
-.pip-bar-fill{height:100%;border-radius:6px;display:flex;align-items:center;padding-left:8px;font-size:10.5px;font-weight:700;color:#fff;transition:width 1s cubic-bezier(.22,1,.36,1);min-width:0}
+.pip-bar-fill{height:100%;border-radius:6px;display:flex;align-items:center;padding-left:8px;font-size:10.5px;font-weight:700;color:#fff;transition:width 1s cubic-bezier(.22,1,.36,1);min-width:0;will-change:width}
 .pip-fill-green{background:linear-gradient(90deg,var(--green),#4caf50)}
 .pip-fill-gray{background:linear-gradient(90deg,#78909c,#b0bec5)}
 .pip-bar-pct{font-size:10.5px;font-weight:700;color:var(--text-muted);width:30px;text-align:right;flex-shrink:0}
@@ -411,8 +403,8 @@ img,svg{display:block}
 #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
 /* ── ANIMATIONS ── */
-.reveal{opacity:0;transform:translateY(22px);transition:opacity .65s cubic-bezier(.22,1,.36,1),transform .65s cubic-bezier(.22,1,.36,1);contain:layout style}
-.reveal.visible{opacity:1;transform:none;contain:none}
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .65s cubic-bezier(.22,1,.36,1),transform .65s cubic-bezier(.22,1,.36,1);will-change:opacity,transform}
+.reveal.visible{opacity:1;transform:none;will-change:auto}
 .counter-num{display:inline-block;min-width:3ch}
 @keyframes slideAnimOut{to{opacity:0;transform:translateX(-22px)}}
 .pendaftar-grid.animating{animation:slideAnimOut .23s ease both}
@@ -441,16 +433,48 @@ img,svg{display:block}
 .footer-copy{margin-top:12px}
 
 /* ── RESPONSIVE ── */
+
+/* Tablet landscape */
 @media(max-width:1024px){
   .infographic-grid{grid-template-columns:repeat(2,1fr)}
   .hero-inner{grid-template-columns:1fr}
   .hero-stats{grid-template-columns:repeat(3,1fr);min-width:0;width:100%;max-width:480px}
+
+  /* Tabel wilayah: kolom lebih sempit, kurangi padding */
+  .wilayah-table thead th,.wilayah-table tbody td{padding:6px 8px}
+  .wt-bar-mini{display:none} /* sembunyikan mini-bar, hemat ruang */
 }
+
+/* Tablet portrait */
 @media(max-width:768px){
   .charts-row{grid-template-columns:1fr}
-  .pendaftar-grid{grid-template-columns:1fr}
+  .pendaftar-grid{grid-template-columns:repeat(2,1fr)}
   .wilayah-tables-wrap{grid-template-columns:1fr}
+
+  /* Pendaftar card lebih compact */
+  .pd-header{padding:14px 16px;gap:10px}
+  .pd-avatar{width:38px;height:38px;font-size:13px}
+  .pd-name{font-size:13.5px}
+  .pd-body{padding:12px 16px}
+  .pd-footer{padding:10px 16px}
+
+  /* Wilayah tabel: rapatkan */
+  .wilayah-table{font-size:11.5px}
+  .wilayah-table thead th{font-size:9.5px;padding:6px 8px}
+  .wilayah-table tbody td{padding:7px 8px}
+  .wt-count{font-size:13px}
+  .wt-rank{width:20px;height:20px;font-size:9px}
+
+  /* Map card header stack */
+  .map-card-header{flex-direction:column;align-items:flex-start}
+  .map-card{padding:18px}
+
+  /* Chart box */
+  .chart-box{padding:18px}
+  .bar-label{width:72px;font-size:10px}
 }
+
+/* Mobile */
 @media(max-width:600px){
   .nav-links,.nav-right .btn-gold{display:none!important}
   .mobile-nav-bar{display:block}
@@ -465,48 +489,98 @@ img,svg{display:block}
   .hero-btns{flex-direction:column;gap:8px}
   #dashboard-hero{padding:76px 16px 44px}
   .cta-box{padding:36px 22px;border-radius:18px}
-  .wilayah-tables-wrap{grid-template-columns:1fr}
+
+  /* Pendaftar grid: 1 kolom di mobile */
+  .pendaftar-grid{grid-template-columns:1fr}
+
+  /* Pendaftar card mobile */
+  .pd-header{padding:12px 14px;gap:10px}
+  .pd-avatar{width:36px;height:36px;font-size:12px}
+  .pd-name{font-size:13px}
+  .pd-sub{font-size:10.5px}
+  .pd-body{padding:11px 14px}
+  .pd-badge{font-size:10px;padding:3px 9px}
+  .pd-info{font-size:12px;line-height:1.7}
+  .pd-footer{padding:9px 14px;font-size:10px}
+
+  /* Pagination nav mobile */
+  .stories-nav{gap:8px;margin-top:20px}
+  .stories-nav-btn{padding:6px 14px;font-size:11.5px}
+  .stories-dots{gap:5px}
+
+  /* Wilayah tables: 1 kolom */
+  .wilayah-tables-wrap{grid-template-columns:1fr;gap:16px}
+  .map-card{padding:14px}
+  .map-card-header{margin-bottom:14px}
+
+  /* Wilayah tabel mobile — layout responsif */
+  .wilayah-table{font-size:11px}
+  .wilayah-table thead th{padding:6px 8px;font-size:9px;letter-spacing:.04em}
+  .wilayah-table tbody td{padding:7px 8px}
+  .wt-rank{width:19px;height:19px;font-size:8.5px}
+  .wt-count{font-size:12.5px}
+  .wt-name{font-size:11px;gap:5px}
+  .wt-bar-mini{display:none}
+
+  /* KPI cards */
+  .info-card{padding:16px 12px}
+  .info-card .big-num{font-size:26px}
+  .info-card .icon-wrap{width:40px;height:40px;font-size:18px}
+
+  /* Bar chart */
+  .chart-box{padding:14px}
+  .chart-box h3{font-size:12.5px}
+  .bar-label{width:64px;font-size:9.5px}
+  .bar-track{height:24px}
+  .bar-fill{font-size:9.5px}
+  .bar-pct{font-size:9.5px;width:28px}
+
+  /* PIP */
+  .pip-main-stat{padding:10px 12px}
+  .pip-big-num{font-size:24px}
+  .pip-bar-label{width:62px;font-size:9.5px}
+  .pip-bar-track{height:22px}
+  .pip-bar-fill{font-size:9.5px}
+
+  /* Hero stat */
+  .hero-stat .num{font-size:22px}
+  .hero-stat .lbl{font-size:9.5px}
+  .hero-stat{padding:14px 10px}
+
+  /* Section spacing */
+  .section{padding:48px 0}
+  .section-header{margin-bottom:32px}
 }
+
+/* Mobile kecil */
 @media(max-width:400px){
   .infographic-grid{grid-template-columns:1fr}
   .hero-stats{grid-template-columns:1fr 1fr}
+
+  /* Tabel wilayah: sembunyikan kolom rank di layar sangat kecil */
+  .wilayah-table thead th:first-child,
+  .wilayah-table tbody td:first-child{display:none}
+
+  /* Teks lebih kecil */
+  .wilayah-table{font-size:10.5px}
+  .wt-count{font-size:12px}
+  .wt-name{font-size:10.5px}
+
+  /* Bar chart compact */
+  .bar-label{width:56px;font-size:9px}
+  .chart-box h3{font-size:11.5px;flex-wrap:wrap}
+  .chart-box h3 span{display:none} /* sembunyikan keterangan kapasitas */
+
+  /* PIP compact */
+  .pip-donut-row{flex-direction:column;align-items:flex-start;gap:10px}
+  .pip-legend-stack{width:100%}
 }
+
 :focus-visible{outline:2px solid var(--blue-bright);outline-offset:2px}
-@media(prefers-reduced-motion:reduce){
-  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
-  .reveal{opacity:1;transform:none}
-}
-@media print{
-  #spmb-nav,.mobile-nav-bar,.refresh-btn,.hero-btns,.cta-section,#toast{display:none!important}
-  body{padding-bottom:0!important}
-  .section{padding:24px 0}
-  #dashboard-hero{background:#0b3d91!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
-}
 </style>
 </head>
 <body>
 
-<!-- Schema.org structured data for SEO -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "EducationalOrganization",
-  "name": "SMKS Ciledug Al Musaddadiyah",
-  "url": "https://www.smkciledugalmusaddadiyah.sch.id",
-  "address": {
-    "@type": "PostalAddress",
-    "streetAddress": "Jl. Mayor Syamsu No. 02",
-    "addressLocality": "Garut",
-    "postalCode": "44151",
-    "addressRegion": "Jawa Barat",
-    "addressCountry": "ID"
-  },
-  "telephone": "+62-262-4892181",
-  "sameAs": ["https://www.instagram.com/smkscalm_official/"]
-}
-</script>
-<!-- Skip nav untuk aksesibilitas keyboard -->
-<a href="#infografis" style="position:absolute;top:-40px;left:0;background:var(--blue-deep);color:#fff;padding:8px 16px;z-index:9999;border-radius:0 0 8px 0;font-weight:700;font-size:13px;transition:top .2s" onfocus="this.style.top='0'" onblur="this.style.top='-40px'">Lewati ke konten utama</a>
 <!-- NAV -->
 <nav id="spmb-nav">
   <div class="nav-inner">
@@ -803,10 +877,10 @@ img,svg{display:block}
       <div class="stories-empty">⏳ Memuat data pendaftar...</div>
     </div>
     <nav class="stories-nav" id="pendaftar-nav" aria-label="Navigasi halaman pendaftar">
-      <button class="stories-nav-btn" id="pendaftar-prev" onclick="pendaftarPage(-1)" disabled aria-label="Halaman sebelumnya">← Sebelumnya</button>
-      <div class="stories-dots" id="pendaftar-dots" role="tablist" aria-label="Pilih halaman"></div>
-      <span class="stories-page-info" id="pendaftar-page-info" aria-live="polite"></span>
-      <button class="stories-nav-btn" id="pendaftar-next" onclick="pendaftarPage(1)" aria-label="Halaman selanjutnya">Selanjutnya →</button>
+      <button class="stories-nav-btn" id="pendaftar-prev" onclick="pendaftarPage(-1)" disabled>← Sebelumnya</button>
+      <div class="stories-dots" id="pendaftar-dots"></div>
+      <span class="stories-page-info" id="pendaftar-page-info"></span>
+      <button class="stories-nav-btn" id="pendaftar-next" onclick="pendaftarPage(1)">Selanjutnya →</button>
     </nav>
   </div>
 </section>
@@ -916,30 +990,27 @@ const FLAG_KEC={
   'sucinaraja':'🌱','leuwigoong':'🌱','karangpawitan':'🌾','leles':'🌺',
   'kadungora':'🌾','malangbong':'🌋','kersamanah':'🌿','pangatikan':'🌻',
 };
+/* Pre-sorted keys longest-first so partial matches work correctly */
+const _kecKeys=Object.keys(FLAG_KEC).sort((a,b)=>b.length-a.length);
 function getKecFlag(name){
   const lower=name.toLowerCase().trim();
-  for(const[k,f]of Object.entries(FLAG_KEC)){if(lower.includes(k))return f;}
+  if(FLAG_KEC[lower])return FLAG_KEC[lower];
+  for(let i=0;i<_kecKeys.length;i++){if(lower.includes(_kecKeys[i]))return FLAG_KEC[_kecKeys[i]];}
   return'📍';
 }
+const _kabFlags=[['garut','🌋'],['bandung','🏙️'],['tasikmalaya','🌊'],['ciamis','🌿'],['sumedang','⛰️'],['majalengka','🌾']];
 function getKabFlag(name){
   const lower=name.toLowerCase().trim();
-  if(lower.includes('garut'))return'🌋';
-  if(lower.includes('bandung'))return'🏙️';
-  if(lower.includes('tasikmalaya'))return'🌊';
-  if(lower.includes('ciamis'))return'🌿';
-  if(lower.includes('sumedang'))return'⛰️';
-  if(lower.includes('majalengka'))return'🌾';
+  for(let i=0;i<_kabFlags.length;i++){if(lower.includes(_kabFlags[i][0]))return _kabFlags[i][1];}
   return'🗺️';
 }
 
 /* ── COUNTER ANIMATION ── */
-const _reducedMotion=window.matchMedia('(prefers-reduced-motion:reduce)').matches;
 function animateCounter(el,target,suffix){
   const t=target!==undefined?target:parseInt(el.dataset.target,10);
   const s=suffix!==undefined?suffix:(el.dataset.suffix||'');
   if(isNaN(t))return;
   if(el._rafId){cancelAnimationFrame(el._rafId);el._rafId=null;}
-  if(_reducedMotion){el.textContent=t+s;return;}
   const dur=1500;
   const start=performance.now();
   function step(now){
@@ -951,8 +1022,17 @@ function animateCounter(el,target,suffix){
   el._rafId=requestAnimationFrame(step);
 }
 
-function setHeroCounter(id,value,suffix){
+/* Cache [data-id] element lookups */
+const _elCache=new Map();
+function _getEl(id){
+  if(_elCache.has(id))return _elCache.get(id);
   const el=document.querySelector(`[data-id="${id}"]`);
+  if(el)_elCache.set(id,el);
+  return el;
+}
+
+function setHeroCounter(id,value,suffix){
+  const el=_getEl(id);
   if(!el)return;
   const sk=el.querySelector('.skeleton');
   if(sk)sk.remove();
@@ -960,7 +1040,7 @@ function setHeroCounter(id,value,suffix){
   animateCounter(el,value,suffix);
 }
 function setBigNum(id,value){
-  const el=document.querySelector(`[data-id="${id}"]`);
+  const el=_getEl(id);
   if(!el)return;
   const sk=el.querySelector('.skeleton');
   if(sk)sk.remove();
@@ -970,18 +1050,21 @@ function setBigNum(id,value){
 
 /* ── INTERSECTION OBSERVER ── */
 const io=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{
+  for(let i=0;i<entries.length;i++){
+    const e=entries[i];
     if(e.isIntersecting){
       e.target.classList.add('visible');
-      e.target.querySelectorAll('.big-num[data-target]').forEach(el=>{
-        const t=parseInt(el.dataset.target,10);
-        if(!isNaN(t))animateCounter(el,t,'');
-      });
+      const nums=e.target.querySelectorAll('.big-num[data-target]');
+      for(let j=0;j<nums.length;j++){
+        const t=parseInt(nums[j].dataset.target,10);
+        if(!isNaN(t))animateCounter(nums[j],t,'');
+      }
       io.unobserve(e.target);
     }
-  });
+  }
 },{threshold:0.08});
-document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+const _revealEls=document.querySelectorAll('.reveal');
+for(let i=0;i<_revealEls.length;i++)io.observe(_revealEls[i]);
 
 /* ── NAV SCROLL ── */
 let _raf=false;
@@ -1004,29 +1087,34 @@ function showToast(msg,isErr=true){
 }
 
 /* ── HTML ESCAPE ── */
-function esc(str){if(!str)return'';return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#x27;');}
+const _escMap={'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#x27;'};
+function esc(str){if(!str)return'';return String(str).replace(/[&<>"']/g,c=>_escMap[c]);}
 
 /* ── BAR CHART JURUSAN ── */
-const KAPASITAS_PER_JURUSAN=36;
+const KAPASITAS_PER_JURUSAN=36; /* 1 kelas = 36 siswa = 100% */
+const _BAR_COLORS=['linear-gradient(90deg,#1565c0,#1e88e5)','linear-gradient(90deg,#7b1fa2,#9c27b0)','linear-gradient(90deg,#1e8c4e,#4caf50)','linear-gradient(90deg,#e65100,#ff6d00)','linear-gradient(90deg,#ffb300,#ffd54f)','linear-gradient(90deg,#0097a7,#00bcd4)','linear-gradient(90deg,#ad1457,#ec407a)','linear-gradient(90deg,#33691e,#558b2f)'];
 function updateBarChart(jurusanData){
   const container=document.getElementById('bar-chart-jurusan');
   if(!container)return;
   const sorted=Object.entries(jurusanData).sort((a,b)=>b[1]-a[1]);
   const max=sorted[0]?.[1]||1;
-  const colors=['linear-gradient(90deg,#1565c0,#1e88e5)','linear-gradient(90deg,#7b1fa2,#9c27b0)','linear-gradient(90deg,#1e8c4e,#4caf50)','linear-gradient(90deg,#e65100,#ff6d00)','linear-gradient(90deg,#ffb300,#ffd54f)','linear-gradient(90deg,#0097a7,#00bcd4)','linear-gradient(90deg,#ad1457,#ec407a)','linear-gradient(90deg,#33691e,#558b2f)'];
-  const html=sorted.slice(0,8).map(([nama,jumlah],i)=>{
+  const limit=Math.min(sorted.length,8);
+  const parts=new Array(limit);
+  for(let i=0;i<limit;i++){
+    const nama=sorted[i][0];
+    const jumlah=sorted[i][1];
     const pct=Math.round((jumlah/max)*100);
-    const shortName=nama.length>14?nama.substring(0,14)+'\u2026':nama;
+    const shortName=nama.length>14?nama.substring(0,14)+'…':nama;
     const kapPct=Math.round((jumlah/KAPASITAS_PER_JURUSAN)*100);
     let kapLabel='';
     if(kapPct>=200){kapLabel=`<span style="margin-left:6px;font-size:9px;font-weight:800;background:var(--gold);color:var(--blue-deep);padding:1px 6px;border-radius:50px;white-space:nowrap">200% PENUH</span>`;}
     else if(kapPct>=100){kapLabel=`<span style="margin-left:6px;font-size:9px;font-weight:800;background:#e8f5e9;color:var(--green);padding:1px 6px;border-radius:50px;white-space:nowrap">100% PENUH</span>`;}
-    return`<div class="bar-row"><div class="bar-label" title="${esc(nama)}">${esc(shortName)}</div><div class="bar-track"><div class="bar-fill" style="width:0%;background:${colors[i%colors.length]}" data-pct="${pct}">${parseInt(jumlah)||0}${kapLabel}</div></div><div class="bar-pct">${kapPct}%</div></div>`;
-  }).join('');
-  container.innerHTML=html;
-  /* Trigger animasi lebar bar di frame berikutnya agar transisi CSS aktif */
+    parts[i]=`<div class="bar-row"><div class="bar-label" title="${esc(nama)}">${esc(shortName)}</div><div class="bar-track"><div class="bar-fill" style="width:0%;background:${_BAR_COLORS[i%_BAR_COLORS.length]}" data-pct="${pct}">${parseInt(jumlah)||0}${kapLabel}</div></div><div class="bar-pct">${kapPct}%</div></div>`;
+  }
+  container.innerHTML=parts.join('');
   requestAnimationFrame(()=>{
-    container.querySelectorAll('.bar-fill').forEach(bar=>{bar.style.width=bar.dataset.pct+'%';});
+    const fills=container.querySelectorAll('.bar-fill');
+    for(let i=0;i<fills.length;i++){fills[i].style.width=fills[i].dataset.pct+'%';}
   });
 }
 
@@ -1042,31 +1130,28 @@ function updatePIP(pip,total){
   const dispEl=document.getElementById('pip-pct-display');
   if(dispEl)dispEl.textContent=pctPip+'%';
 
-  /* bars */
-  requestAnimationFrame(()=>{
-    const pipFill=document.getElementById('pip-bar-fill');
-    const nonFill=document.getElementById('nonpip-bar-fill');
-    if(pipFill){pipFill.style.width=pctPip+'%';}
-    if(nonFill){nonFill.style.width=pctNon+'%';}
-  });
+  /* Read all elements first, then write — avoids layout thrashing */
+  const pipFill=document.getElementById('pip-bar-fill');
+  const nonFill=document.getElementById('nonpip-bar-fill');
   const pv=document.getElementById('pip-bar-val');
   const nv=document.getElementById('nonpip-bar-val');
   const pp=document.getElementById('pip-bar-pct');
   const np=document.getElementById('nonpip-bar-pct');
+  const arc=document.getElementById('pip-donut-arc');
+  const dc=document.getElementById('pip-donut-center');
+  const lp=document.getElementById('pip-legend-pip');
+  const ln=document.getElementById('pip-legend-nonpip');
+
+  requestAnimationFrame(()=>{
+    if(pipFill)pipFill.style.width=pctPip+'%';
+    if(nonFill)nonFill.style.width=pctNon+'%';
+    if(arc)arc.style.strokeDasharray=`${lenPip} ${circ}`;
+  });
   if(pv)pv.textContent=pip;
   if(nv)nv.textContent=nonpip;
   if(pp)pp.textContent=pctPip+'%';
   if(np)np.textContent=pctNon+'%';
-
-  /* donut */
-  const arc=document.getElementById('pip-donut-arc');
-  if(arc){arc.style.strokeDasharray=`${lenPip} ${circ}`;}
-  const dc=document.getElementById('pip-donut-center');
   if(dc)dc.textContent=pctPip+'%';
-
-  /* legend */
-  const lp=document.getElementById('pip-legend-pip');
-  const ln=document.getElementById('pip-legend-nonpip');
   if(lp)lp.textContent=pip+' siswa';
   if(ln)ln.textContent=nonpip+' siswa';
 }
@@ -1077,13 +1162,17 @@ function buildWilayahTable(data,maxRow,isKab){
     return`<div class="wilayah-empty">${isKab?'🗺️ Belum ada data kabupaten.':'🏫 Belum ada data kecamatan.'}</div>`;
   }
   const maxVal=data[0]?.[1]||1;
-  const rows=data.slice(0,maxRow).map(([nama,jumlah],i)=>{
+  const limit=Math.min(data.length,maxRow);
+  const color=isKab?'linear-gradient(90deg,#e65100,#ff6d00)':'linear-gradient(90deg,#1565c0,#1e88e5)';
+  const rows=new Array(limit);
+  for(let i=0;i<limit;i++){
+    const nama=data[i][0];
+    const jumlah=data[i][1];
     const rankClass=i===0?'r1':i===1?'r2':i===2?'r3':'rn';
     const flag=isKab?getKabFlag(nama):getKecFlag(nama);
     const barPct=Math.round((jumlah/maxVal)*100);
     const barWidth=Math.max(barPct,4);
-    const color=isKab?'linear-gradient(90deg,#e65100,#ff6d00)':'linear-gradient(90deg,#1565c0,#1e88e5)';
-    return`<tr>
+    rows[i]=`<tr>
       <td style="width:32px"><span class="wt-rank ${rankClass}">${i+1}</span></td>
       <td><span class="wt-name"><span>${flag}</span>${esc(nama)}</span></td>
       <td>
@@ -1093,14 +1182,14 @@ function buildWilayahTable(data,maxRow,isKab){
         </div>
       </td>
     </tr>`;
-  }).join('');
+  }
   return`<table class="wilayah-table">
     <thead><tr>
       <th style="width:32px">#</th>
       <th>${isKab?'Kabupaten/Kota':'Kecamatan'}</th>
       <th style="text-align:right">Pendaftar</th>
     </tr></thead>
-    <tbody>${rows}</tbody>
+    <tbody>${rows.join('')}</tbody>
   </table>`;
 }
 
@@ -1112,8 +1201,8 @@ function updateWilayah(kecData,kabData){
   const tblKab=document.getElementById('tabel-kabupaten');
   const kecArr=Object.entries(kecData||{}).sort((a,b)=>b[1]-a[1]);
   const kabArr=Object.entries(kabData||{}).sort((a,b)=>b[1]-a[1]);
-  const totalKec=kecArr.reduce((s,[,v])=>s+(parseInt(v)||0),0);
-  const totalKab=kabArr.reduce((s,[,v])=>s+(parseInt(v)||0),0);
+  let totalKec=0;for(let i=0;i<kecArr.length;i++)totalKec+=(parseInt(kecArr[i][1])||0);
+  let totalKab=0;for(let i=0;i<kabArr.length;i++)totalKab+=(parseInt(kabArr[i][1])||0);
   if(badge)badge.textContent=`🗺️ ${kecArr.length} Kecamatan · ${kabArr.length} Kabupaten/Kota`;
   if(badgeKec)badgeKec.textContent=`${kecArr.length} lokasi · ${totalKec} pendaftar`;
   if(badgeKab)badgeKab.textContent=`${kabArr.length} kabupaten · ${totalKab} pendaftar`;
@@ -1127,14 +1216,21 @@ let _pendaftarPage=0;
 const PER_PAGE=6;
 const GRADIENTS=['linear-gradient(135deg,#1565c0,#1e88e5)','linear-gradient(135deg,#7b1fa2,#ab47bc)','linear-gradient(135deg,#1b5e20,#388e3c)','linear-gradient(135deg,#e65100,#ff6d00)','linear-gradient(135deg,#0097a7,#00bcd4)','linear-gradient(135deg,#ad1457,#ec407a)'];
 
+/* Cache frequently accessed pendaftar-section DOM elements */
+const _DOM={
+  get grid(){return document.getElementById('pendaftar-grid');},
+  get nav(){return document.getElementById('pendaftar-nav');},
+  get prev(){return document.getElementById('pendaftar-prev');},
+  get next(){return document.getElementById('pendaftar-next');},
+  get dots(){return document.getElementById('pendaftar-dots');},
+  get pageInfo(){return document.getElementById('pendaftar-page-info');},
+  get count(){return document.getElementById('pendaftar-count');},
+};
+
 function renderPendaftarPage(){
-  const grid=document.getElementById('pendaftar-grid');
-  const nav=document.getElementById('pendaftar-nav');
-  const prevBtn=document.getElementById('pendaftar-prev');
-  const nextBtn=document.getElementById('pendaftar-next');
-  const dotsEl=document.getElementById('pendaftar-dots');
-  const pageInfo=document.getElementById('pendaftar-page-info');
+  const grid=_DOM.grid;
   if(!grid)return;
+  const nav=_DOM.nav;
   const totalPages=Math.ceil(_allPendaftar.length/PER_PAGE);
   const start=_pendaftarPage*PER_PAGE;
   const slice=_allPendaftar.slice(start,start+PER_PAGE);
@@ -1143,7 +1239,9 @@ function renderPendaftarPage(){
     if(nav)nav.style.display='none';
     return;
   }
-  grid.innerHTML=slice.map((p,i)=>{
+  const parts=new Array(slice.length);
+  for(let i=0;i<slice.length;i++){
+    const p=slice[i];
     const gi=start+i;
     const initial=(p.namaLengkap||p.nama||'?').split(' ').filter(Boolean).map(w=>w[0]).join('').toUpperCase().slice(0,2);
     const grad=GRADIENTS[gi%GRADIENTS.length];
@@ -1156,7 +1254,7 @@ function renderPendaftarPage(){
     const kec=p.kecamatanSekolah||p.kecamatan||'–';
     const pipStatus=((p.pip||'').toLowerCase()==='ya'||p.pip==='1'||p.pip===true)?'✅ PIP':'';
     const nama=esc(p.namaLengkap||p.nama||'Anonim');
-    return`<article class="pendaftar-card">
+    parts[i]=`<article class="pendaftar-card">
       <div class="pd-header" style="background:${grad}">
         <div class="pd-avatar" style="background:rgba(255,255,255,.15)">${esc(initial)}</div>
         <div>
@@ -1173,22 +1271,29 @@ function renderPendaftarPage(){
       </div>
       <div class="pd-footer">📍 ${esc(p.kabupatenSekolah||p.kabupaten||'Garut')}</div>
     </article>`;
-  }).join('');
+  }
+  grid.innerHTML=parts.join('');
   /* nav */
   if(nav){
     if(totalPages>1){
       nav.style.display='flex';
+      const prevBtn=_DOM.prev;
+      const nextBtn=_DOM.next;
       if(prevBtn)prevBtn.disabled=_pendaftarPage===0;
       if(nextBtn)nextBtn.disabled=_pendaftarPage===totalPages-1;
+      const pageInfo=_DOM.pageInfo;
       if(pageInfo)pageInfo.textContent=`${_pendaftarPage+1} / ${totalPages}`;
+      const dotsEl=_DOM.dots;
       if(dotsEl){
-        dotsEl.innerHTML=Array.from({length:totalPages},(_,i)=>
-          `<button class="stories-dot${i===_pendaftarPage?' active':''}" onclick="pendaftarGoTo(${i})" aria-label="Halaman ${i+1}"></button>`
-        ).join('');
+        const dotParts=new Array(totalPages);
+        for(let i=0;i<totalPages;i++){
+          dotParts[i]=`<button class="stories-dot${i===_pendaftarPage?' active':''}" onclick="pendaftarGoTo(${i})" aria-label="Halaman ${i+1}"></button>`;
+        }
+        dotsEl.innerHTML=dotParts.join('');
       }
     }else{nav.style.display='none';}
   }
-  const cnt=document.getElementById('pendaftar-count');
+  const cnt=_DOM.count;
   if(cnt)cnt.textContent=`${_allPendaftar.length} pendaftar terdaftar`;
 }
 
@@ -1234,24 +1339,30 @@ function clearCache(){_memCache=null;}
 /* Fungsi ini memetakan berbagai variasi nama kolom Google Sheet
    ke nama field standar yang dipakai renderData & renderPendaftarPage.
    Tidak mengubah logika apapun — hanya menambah alias field. */
+const _NORM_KEYS={
+  namaLengkap:   ['namaLengkap','nama_lengkap','nama','Nama Lengkap','Nama','name','fullName'],
+  jenisKelamin:  ['jenisKelamin','jenis_kelamin','Jenis Kelamin','gender','kelamin','JenisKelamin'],
+  pip:           ['pip','PIP','pip_status','statusPip','Status PIP','hasPip'],
+  namaSekolah:   ['namaSekolah','nama_sekolah','Nama Sekolah','sekolah','asalSekolah','asal_sekolah','schoolName','namaSekolahAsal'],
+  jenisSekolah:  ['jenisSekolah','jenis_sekolah','Jenis Sekolah','tipeSekolah','statusSekolah'],
+  pilihan1:      ['pilihan1','pilihan_1','Pilihan 1','jurusan1','jurusanPilihan1','pilihan_jurusan_1','jurusan','Jurusan','Pilihan Jurusan 1','pilihanJurusan'],
+  pilihan2:      ['pilihan2','pilihan_2','Pilihan 2','jurusan2','jurusanPilihan2','pilihan_jurusan_2','Pilihan Jurusan 2'],
+  kecamatanSekolah:['kecamatanSekolah','kecamatan_sekolah','kecamatan','Kecamatan','Kecamatan Sekolah','kecamatanAsal'],
+  kabupatenSekolah:['kabupatenSekolah','kabupaten_sekolah','kabupaten','Kabupaten','Kabupaten/Kota','kabupatenAsal','kotaKabupaten'],
+};
+const _NORM_FIELD_NAMES=Object.keys(_NORM_KEYS);
 function normRow(r){
   if(!r||typeof r!=='object')return r;
-  /* Helper ambil nilai dari banyak kemungkinan nama kunci */
-  function pick(){for(let i=0;i<arguments.length;i++){const v=r[arguments[i]];if(v!==undefined&&v!==null&&v!=='')return v;}return'';}
-  return {
-    /* Pertahankan semua field asli dulu */
-    ...r,
-    /* Tambahkan/perkuat alias field yang paling sering beda nama */
-    namaLengkap: pick('namaLengkap','nama_lengkap','nama','Nama Lengkap','Nama','name','fullName'),
-    jenisKelamin: pick('jenisKelamin','jenis_kelamin','Jenis Kelamin','gender','kelamin','JenisKelamin'),
-    pip:          pick('pip','PIP','pip_status','statusPip','Status PIP','hasPip'),
-    namaSekolah:  pick('namaSekolah','nama_sekolah','Nama Sekolah','sekolah','asalSekolah','asal_sekolah','schoolName','namaSekolahAsal'),
-    jenisSekolah: pick('jenisSekolah','jenis_sekolah','Jenis Sekolah','tipeSekolah','statusSekolah'),
-    pilihan1:     pick('pilihan1','pilihan_1','Pilihan 1','jurusan1','jurusanPilihan1','pilihan_jurusan_1','jurusan','Jurusan','Pilihan Jurusan 1','pilihanJurusan'),
-    pilihan2:     pick('pilihan2','pilihan_2','Pilihan 2','jurusan2','jurusanPilihan2','pilihan_jurusan_2','Pilihan Jurusan 2'),
-    kecamatanSekolah: pick('kecamatanSekolah','kecamatan_sekolah','kecamatan','Kecamatan','Kecamatan Sekolah','kecamatanAsal'),
-    kabupatenSekolah: pick('kabupatenSekolah','kabupaten_sekolah','kabupaten','Kabupaten','Kabupaten/Kota','kabupatenAsal','kotaKabupaten'),
-  };
+  const out=Object.assign({},r);
+  for(let fi=0;fi<_NORM_FIELD_NAMES.length;fi++){
+    const field=_NORM_FIELD_NAMES[fi];
+    const keys=_NORM_KEYS[field];
+    for(let ki=0;ki<keys.length;ki++){
+      const v=r[keys[ki]];
+      if(v!==undefined&&v!==null&&v!==''){out[field]=v;break;}
+    }
+  }
+  return out;
 }
 
 /* ── RENDER DATA ── */
@@ -1266,7 +1377,8 @@ function renderData(d,source){
   /* Normalisasi setiap row agar nama field konsisten */
   const rows=Array.isArray(rawRows)?rawRows.map(normRow):[];
   if(rows.length>0){
-    rows.forEach(r=>{
+    for(let ri=0;ri<rows.length;ri++){
+      const r=rows[ri];
       total++;
       const jk=(r.jenisKelamin||'').toLowerCase();
       if(jk==='perempuan')perempuan++;else laki++;
@@ -1290,7 +1402,7 @@ function renderData(d,source){
       if(kec){const norm=kec.charAt(0).toUpperCase()+kec.slice(1).toLowerCase();kecCount[norm]=(kecCount[norm]||0)+1;}
       const kab=(r.kabupatenSekolah||'').trim();
       if(kab){const norm=kab.charAt(0).toUpperCase()+kab.slice(1).toLowerCase();kabCount[norm]=(kabCount[norm]||0)+1;}
-    });
+    }
   } else {
     /* Fallback: server kirim statistik agregat (rows kosong atau tidak ada) */
     total=d.total||0;
@@ -1360,7 +1472,7 @@ function renderData(d,source){
   if(source==='live'){
     if(ts)ts.textContent=d.lastUpdated?'Data per '+d.lastUpdated:'Data ter-update barusan';
     if(badge){badge.style.display='inline-flex';badge.className='data-status live';badge.textContent='Data Live — Database SMK Ciledug Al Musaddadiyah';}
-  } else if(source==='cache'){
+  }else if(source==='cache'){
     if(ts)ts.textContent='Data dari cache lokal';
     if(badge){badge.style.display='inline-flex';badge.className='data-status live';badge.textContent='Cache — memperbarui...';}
   }
@@ -1428,27 +1540,29 @@ async function loadData(forceRefresh=false){
     loadFallbackData();
   }
 
-  /* 2) Fetch live — timeout 12 detik (lebih cepat dari 15) */
+  /* 2) Fetch live */
   const ctrl=new AbortController();
   _ctrl=ctrl;
-  const timeoutId=setTimeout(()=>{try{ctrl.abort();}catch(_){}},12000);
+  const timeoutId=setTimeout(()=>{try{ctrl.abort();}catch(_){}},15000);
+  /* no-cors tidak bisa baca response — gunakan cors biasa, Apps Script sudah support */
   const url=APPS_SCRIPT_URL+'?action=getInfografis&t='+Date.now();
   try{
     const res=await fetch(url,{signal:ctrl.signal,cache:'no-store'});
     if(!res.ok)throw new Error('HTTP '+res.status);
     const text=await res.text();
+    /* Bersihkan kemungkinan karakter BOM atau whitespace dari Apps Script */
     const cleaned=text.replace(/^\uFEFF/,'').trim();
     let d;
     try{d=JSON.parse(cleaned);}catch(pe){throw new Error('JSON parse error: '+pe.message);}
     if(d.error)throw new Error(d.error);
     saveCache(d);
     renderData(d,'live');
-    if(forceRefresh)showToast('Data berhasil diperbarui! \u2705',false);
+    if(forceRefresh)showToast('Data berhasil diperbarui! ✅',false);
   }catch(e){
+    /* Hanya tampilkan fallback jika belum ada data apapun di layar */
     const gridHasRealData=_allPendaftar.length>0;
     if(e&&e.name==='AbortError'){
       if(!cached&&!gridHasRealData)loadFallbackData();
-      if(forceRefresh)showToast('Koneksi timeout — coba lagi',true);
       return;
     }
     if(!cached&&!gridHasRealData)loadFallbackData();
@@ -1472,17 +1586,10 @@ document.addEventListener('visibilitychange',()=>{
   }
 });
 
-/* Mulai load data setelah DOM siap */
-if(document.readyState==='loading'){
-  document.addEventListener('DOMContentLoaded',()=>{
-    refreshTimer=setInterval(()=>loadData(false),10*60*1000);
-    loadData(false);
-  });
-}else{
-  /* DOM sudah siap (script di akhir body) */
+document.addEventListener('DOMContentLoaded',()=>{
   refreshTimer=setInterval(()=>loadData(false),10*60*1000);
   loadData(false);
-}
+});
 </script>
 </body>
 </html>
